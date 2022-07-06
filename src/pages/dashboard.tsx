@@ -15,6 +15,7 @@ const Dashboard = () => {
     const [topArtists, setTopArtists] = React.useState<artistsResponse | null>(
         null
     );
+    const [topTracks, setTopTracks] = React.useState();
 
     useEffect(() => {
         const getProfile = async () => {
@@ -26,9 +27,14 @@ const Dashboard = () => {
 
             const topArtistsData = await getRequests(paths.topArtistsMedium);
             setTopArtists(topArtistsData);
+
+            const topTracksData = await getRequests(paths.topTracksShort);
+            setTopTracks(topTracksData);
         };
         catchErrors(getProfile)();
     }, []);
+
+    console.log(topTracks);
 
     return (
         <>
