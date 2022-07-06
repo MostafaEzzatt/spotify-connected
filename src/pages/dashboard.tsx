@@ -1,25 +1,32 @@
 import React, { useEffect } from "react";
-import getProfileData from "../spotify/getProfileData";
-import getUserPlaylist from "../spotify/getUserPlaylist";
 import catchErrors from "../utils/catchError";
 
 // types
+import getRequests from "../spotify/getRequest";
+import paths from "../spotify/requestPaths";
 import type PlayListResponse from "../types/playListResponse";
+import artistsResponse from "../types/spotifyArtistsResponse";
 
 const Dashboard = () => {
     const [profile, setProfile] = React.useState(null);
     const [playLists, setPlayLists] = React.useState<PlayListResponse | null>(
         null
     );
+    const [topArtists, setTopArtists] = React.useState<artistsResponse | null>(
+        null
+    );
 
     useEffect(() => {
         const getProfile = async () => {
-            const profileData = await getProfileData();
-            const playlistData = await getUserPlaylist();
+            const profileData = await getRequests(paths.profile);
             setProfile(profileData);
-            setPlayLists(playlistData);
-        };
 
+            const playlistData = await getRequests(paths.playlists);
+            setPlayLists(playlistData);
+
+            const topArtistsData = await getRequests(paths.topArtistsMedium);
+            setTopArtists(topArtistsData);
+        };
         catchErrors(getProfile)();
     }, []);
 
@@ -28,7 +35,7 @@ const Dashboard = () => {
             <div>Dashboard</div>
 
             <div className="flex gap-6 text-white">
-                {/* {playLists &&
+                {playLists &&
                     playLists.items.map((item) => {
                         return (
                             <div key={item.id}>
@@ -41,7 +48,7 @@ const Dashboard = () => {
                                 )}
                             </div>
                         );
-                    })} */}
+                    })}
             </div>
         </>
     );

@@ -17,7 +17,8 @@ export default function handler(
     res: NextApiResponse<Data>
 ) {
     const state = generateRandomString(); // default length 16
-    const spotifyScope = "user-read-private user-read-email";
+    const spotifyScope =
+        "user-read-private user-read-email user-read-recently-played user-top-read user-follow-read user-follow-modify playlist-read-private playlist-read-collaborative playlist-modify-public";
 
     if (!CLIENT_ID || typeof CLIENT_ID !== "string")
         return res.status(500).json({ error: "CLIENT_ID is not defined" });

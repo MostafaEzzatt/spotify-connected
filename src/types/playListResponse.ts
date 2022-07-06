@@ -1,11 +1,12 @@
-export default interface PlayListResponse {
-    ref: string;
+import type {
+    resonse,
+    images,
+    owner,
+    external_urls,
+} from "./spotifyAPIResponse";
+
+export default interface playListResponse extends resonse {
     items: item[];
-    limit: number;
-    next: null | string;
-    offset: number;
-    previous: null | string;
-    total: number;
 }
 
 export type item = {
@@ -24,15 +25,3 @@ export type item = {
     type: "playlist";
     uri: string;
 };
-
-export type external_urls = { spotify: string };
-export type images = { height: number; url: string; width: number };
-
-export interface owner {
-    display_name: string;
-    external_urls: external_urls;
-    href: string;
-    id: string;
-    type: string;
-    uri: string;
-}
