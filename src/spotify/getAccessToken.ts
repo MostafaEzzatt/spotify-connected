@@ -1,4 +1,4 @@
-import { Keys } from "./spotifyLocalStorageKets";
+import { Keys } from "./spotifyLocalStorageKeys";
 
 const LOCALSTORAGE_VALUES: {
     accessToken: string | null;
