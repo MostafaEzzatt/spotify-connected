@@ -82,8 +82,7 @@ export const getSpotifyAccessTokenFromObject = (obj: RouteQueryObjectType) => {
     return obj.access_token;
 };
 
-const getSpotifyAccessToken = (RouteQueryObject: RouteQueryObjectType = {}) => {
-    // add local storage values to the variable LOCALSTORAGE_VALUES only on client side
+const loadLocalStorageData = () => {
     LOCALSTORAGE_VALUES.accessToken = window.localStorage.getItem(
         Keys.accessToken
     );
@@ -94,6 +93,11 @@ const getSpotifyAccessToken = (RouteQueryObject: RouteQueryObjectType = {}) => {
         Keys.expiresIn
     );
     LOCALSTORAGE_VALUES.timestamp = window.localStorage.getItem(Keys.timestamp);
+};
+
+const getSpotifyAccessToken = (RouteQueryObject: RouteQueryObjectType = {}) => {
+    // add local storage values to the variable LOCALSTORAGE_VALUES only on client side
+    loadLocalStorageData();
 
     if (Object.keys(RouteQueryObject).length === 0) {
         if (
