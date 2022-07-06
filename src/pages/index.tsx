@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import LoadingFullScreen from "../components/LoadingFullScreen";
 import PrimaryButtonLink from "../components/PrimaryButtonLink";

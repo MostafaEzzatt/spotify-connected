@@ -9,6 +9,8 @@ const getProfileData = async () => {
     headers.append("Content-Type", "application/json");
     headers.append("Authorization", `Bearer ${accessToken}`);
 
+    if (!accessToken) return false;
+
     const request = await fetch(request_url, {
         method: "GET",
         headers,
