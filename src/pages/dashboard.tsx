@@ -38,26 +38,27 @@ const Dashboard = () => {
         catchErrors(getProfile)();
     }, []);
 
-    console.log(profile);
+    console.log({ profile, playLists, topArtists, topTracks });
     return (
         <>
             <div>Dashboard</div>
 
             <div className="flex gap-6 text-white">
-                {playLists &&
-                    playLists.items.map((item) => {
-                        return (
-                            <div key={item.id}>
-                                {item.name}{" "}
-                                {item.images.length >= 1 && (
-                                    <img
-                                        src={item.images[0].url}
-                                        alt={item.name}
-                                    />
-                                )}
-                            </div>
-                        );
-                    })}
+                {playLists && Array.isArray(playLists?.items)
+                    ? playLists.items.map((item) => {
+                          return (
+                              <div key={item.id}>
+                                  {item.name}{" "}
+                                  {item.images.length >= 1 && (
+                                      <img
+                                          src={item.images[0].url}
+                                          alt={item.name}
+                                      />
+                                  )}
+                              </div>
+                          );
+                      })
+                    : "No playlists"}
             </div>
         </>
     );

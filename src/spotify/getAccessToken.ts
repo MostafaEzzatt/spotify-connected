@@ -25,7 +25,7 @@ export const logout = () => {
         window.localStorage.removeItem(property);
     }
     // Navigate to homepage
-    // window.location = window.location.origin;
+    window.location.href = window.location.origin;
 };
 
 const refreshToken = async () => {

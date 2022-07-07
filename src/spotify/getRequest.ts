@@ -1,3 +1,4 @@
+import getSpotifyAccessToken from "./getAccessToken";
 import requestHeaders from "./requestHeaders";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -14,7 +15,12 @@ const getRequests = async (path: string) => {
         headers,
     });
 
-    return await request.json();
+    const response = await request.json();
+    if (response.error?.status === 401) {
+        getSpotifyAccessToken();
+    }
+
+    return response;
 };
 
 export default getRequests;
