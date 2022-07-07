@@ -6,16 +6,20 @@ import getRequests from "../spotify/getRequest";
 import paths from "../spotify/requestPaths";
 import type PlayListResponse from "../types/playListResponse";
 import artistsResponse from "../types/spotifyArtistsResponse";
+import topTracksResponse from "../types/spotifyTopTacks";
+import { profileResponse } from "../types/spotifyAPIProfileResponse";
 
 const Dashboard = () => {
-    const [profile, setProfile] = React.useState(null);
+    const [profile, setProfile] = React.useState<profileResponse | null>(null);
     const [playLists, setPlayLists] = React.useState<PlayListResponse | null>(
         null
     );
     const [topArtists, setTopArtists] = React.useState<artistsResponse | null>(
         null
     );
-    const [topTracks, setTopTracks] = React.useState();
+    const [topTracks, setTopTracks] = React.useState<topTracksResponse | null>(
+        null
+    );
 
     useEffect(() => {
         const getProfile = async () => {
@@ -34,8 +38,7 @@ const Dashboard = () => {
         catchErrors(getProfile)();
     }, []);
 
-    console.log(topTracks);
-
+    console.log(profile);
     return (
         <>
             <div>Dashboard</div>
