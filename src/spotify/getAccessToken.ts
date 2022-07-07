@@ -28,24 +28,42 @@ export const logout = () => {
     window.location.href = window.location.origin;
 };
 
-const refreshToken = async () => {
+export const refreshToken = async () => {
     try {
         // Logout if there's no refresh token stored or we've managed to get into a reload infinite loop
+        const refreshToken = window.localStorage.getItem(Keys.refreshToken);
+        const timestamp = window.localStorage.getItem(Keys.timestamp);
         if (
-            !LOCALSTORAGE_VALUES.refreshToken ||
-            LOCALSTORAGE_VALUES.refreshToken === "undefined" ||
-            Date.now() - Number(LOCALSTORAGE_VALUES.timestamp) / 1000 < 1000
+            !refreshToken ||
+            refreshToken === "undefined" ||
+            Date.now() - Number(timestamp) / 1000 < 1000
         ) {
             console.error("No refresh token available");
             logout();
         }
+        // if (
+        //     !LOCALSTORAGE_VALUES.refreshToken ||
+        //     LOCALSTORAGE_VALUES.refreshToken === "undefined" ||
+        //     Date.now() - Number(LOCALSTORAGE_VALUES.timestamp) / 1000 < 1000
+        // ) {
+        //     console.error("No refresh token available");
+        //     logout();
+        // }
 
         // Use `/refresh_token` endpoint from our Node app
         const requestRefresh = await fetch(
-            `/api/refresh_token?refresh_token=${LOCALSTORAGE_VALUES.refreshToken}`
+            `/api/refresh_token?refresh_token=${refreshToken}`
         );
 
         const response = await requestRefresh.json();
+
+        // check if the response is valid
+        if (response.data?.error) {
+            console.log("found error");
+            logout();
+            return;
+        }
+
         // Update localStorage values
         window.localStorage.setItem(
             Keys.accessToken,
