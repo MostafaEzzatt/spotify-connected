@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Image from "next/image";
 import catchErrors from "../utils/catchError";
 
 // types
@@ -38,7 +39,6 @@ const Dashboard = () => {
         catchErrors(getProfile)();
     }, []);
 
-    console.log({ profile, playLists, topArtists, topTracks });
     return (
         <>
             <div>Dashboard</div>
@@ -50,9 +50,11 @@ const Dashboard = () => {
                               <div key={item.id}>
                                   {item.name}{" "}
                                   {item.images.length >= 1 && (
-                                      <img
+                                      <Image
                                           src={item.images[0].url}
                                           alt={item.name}
+                                          width={100}
+                                          height={100}
                                       />
                                   )}
                               </div>
