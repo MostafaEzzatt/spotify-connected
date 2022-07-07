@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
 import Image from "next/image";
+import React, { useEffect } from "react";
 import catchErrors from "../utils/catchError";
 
 // types
 import getRequests from "../spotify/getRequest";
 import paths from "../spotify/requestPaths";
 import type PlayListResponse from "../types/playListResponse";
+import { profileResponse } from "../types/spotifyAPIProfileResponse";
 import artistsResponse from "../types/spotifyArtistsResponse";
 import topTracksResponse from "../types/spotifyTopTacks";
-import { profileResponse } from "../types/spotifyAPIProfileResponse";
 
 const Dashboard = () => {
     const [profile, setProfile] = React.useState<profileResponse | null>(null);
@@ -69,8 +69,9 @@ const Dashboard = () => {
 export default Dashboard;
 
 // TODO
-// 1. Get profile data from Spotify
+// 1. Get profile data from Spotify [done]
 // 2. Display profile data
-// 3. Get user's Playlists from Spotify
-// 4. Get User's top tracks from Spotify
-// 5. Get User's top artists from Spotify
+// 3. Get user's Playlists from Spotify [done]
+// 4. Get User's top tracks from Spotify [done]
+// 5. Get User's top artists from Spotify [done]
+// 7. create protected routes components

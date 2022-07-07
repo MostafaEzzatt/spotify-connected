@@ -7,6 +7,9 @@ import PrimaryButtonLink from "../components/PrimaryButtonLink";
 // spotify
 import getSpotifyAccessToken from "../spotify/getAccessToken";
 
+// protect route util
+import withPublic from "../utils/withPublic";
+
 const Home: NextPage = () => {
     const [accessToken, setAccessToken] = useState<
         string | null | undefined | false
@@ -20,12 +23,6 @@ const Home: NextPage = () => {
 
         setLoading(false);
     }, [router.query]);
-
-    useEffect(() => {
-        if (typeof accessToken === "string") {
-            router.replace("/dashboard");
-        }
-    }, [accessToken, router]);
 
     if (loading) return <LoadingFullScreen />;
 
@@ -47,4 +44,4 @@ const Home: NextPage = () => {
     );
 };
 
-export default Home;
+export default withPublic(Home);
