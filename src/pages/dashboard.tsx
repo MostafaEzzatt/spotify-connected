@@ -6,7 +6,6 @@ import getRequests from "../spotify/getRequest";
 import paths from "../spotify/requestPaths";
 
 // Components
-import SectionHeading from "../components/typography/SectionHeading";
 
 // types
 import type PlayListResponse from "../types/playListResponse";
@@ -15,13 +14,13 @@ import artistsResponse from "../types/spotifyArtistsResponse";
 import topTracksResponse from "../types/spotifyTopTacks";
 
 // Route Protection
-import ProfileHeader from "../components/ProfileHeader";
-import withAuth from "../utils/withAuth";
-import CustomeImage from "../components/CustomeImage";
-import Link from "next/link";
-import SectionTemplate from "../components/SectionTemplate";
-import Playlists from "../components/Playlists";
 import Logout from "../components/Logout";
+import Playlists from "../components/Playlists";
+import ProfileHeader from "../components/ProfileHeader";
+import SectionTemplate from "../components/SectionTemplate";
+import withAuth from "../utils/withAuth";
+import TopArtists from "../components/TopArtists";
+import TopTracks from "../components/TopTracks";
 
 const Dashboard = () => {
     const [profile, setProfile] = React.useState<profileResponse | null>(null);
@@ -57,7 +56,11 @@ const Dashboard = () => {
             <Logout />
             <ProfileHeader profile={profile} />
 
-            <div className="container mx-auto flex flex-col gap-y-6 pt-6 px-6 2xl:px-0 max-w-screen-lg">
+            <div className="container mx-auto flex flex-col gap-y-10 pt-6 px-6 2xl:px-0 max-w-screen-lg">
+                <SectionTemplate title="Top Artists" distenation="/top_artists">
+                    <TopArtists artists={topArtists} show={8} />
+                </SectionTemplate>
+
                 <SectionTemplate title="Playlists" distenation="/playlists">
                     <Playlists playLists={playLists} show={8} />
                 </SectionTemplate>
@@ -74,4 +77,6 @@ export default withAuth(Dashboard);
 // 3. Get user's Playlists from Spotify [done]
 // 4. Get User's top tracks from Spotify [done]
 // 5. Get User's top artists from Spotify [done]
-// 7. create protected routes components
+// 7. create protected routes components [done]
+// 8. create component to display playlists [done]
+// 9. create component to display top artists [done]

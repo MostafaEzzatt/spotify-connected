@@ -8,7 +8,6 @@ type Props = {
 
 const CustomeImage = (props: Props) => {
     const { image, alt, type } = props;
-    console.log(image);
     return (
         <div className="w-full max-w-full">
             {typeof image === "string" ? (
