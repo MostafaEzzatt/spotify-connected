@@ -6,6 +6,12 @@ import getRequests from "../spotify/getRequest";
 import paths from "../spotify/requestPaths";
 
 // Components
+import Logout from "../components/Logout";
+import Playlists from "../components/Playlists";
+import ProfileHeader from "../components/ProfileHeader";
+import TopArtists from "../components/TopArtists";
+import TopTracks from "../components/TopTracks";
+import SectionTemplate from "../components/SectionTemplate";
 
 // types
 import type PlayListResponse from "../types/playListResponse";
@@ -14,13 +20,7 @@ import artistsResponse from "../types/spotifyArtistsResponse";
 import topTracksResponse from "../types/spotifyTopTacks";
 
 // Route Protection
-import Logout from "../components/Logout";
-import Playlists from "../components/Playlists";
-import ProfileHeader from "../components/ProfileHeader";
-import SectionTemplate from "../components/SectionTemplate";
-import withAuth from "../utils/withAuth";
-import TopArtists from "../components/TopArtists";
-import TopTracks from "../components/TopTracks";
+import withAuth from "../components/protected/withAuth";
 
 const Dashboard = () => {
     const [profile, setProfile] = React.useState<profileResponse | null>(null);

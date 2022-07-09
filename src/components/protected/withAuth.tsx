@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
+import { Keys } from "../../spotify/spotifyLocalStorageKeys";
 
-import { Keys } from "../spotify/spotifyLocalStorageKeys";
-
-function withAuth(WrappedComponent) {
-    return function Auth(props) {
+export default function withAuth<T>(
+    WrappedComponent: React.ComponentType<T | any>
+) {
+    function Auth(props: T) {
         const router = useRouter();
 
         useEffect(() => {
@@ -17,7 +18,10 @@ function withAuth(WrappedComponent) {
         }, [router]);
 
         return <WrappedComponent {...props} />;
-    };
-}
+    }
 
-export default withAuth;
+    Auth.displayName =
+        WrappedComponent.displayName || WrappedComponent.name || "Component";
+
+    return Auth;
+}

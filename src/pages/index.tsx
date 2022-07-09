@@ -8,7 +8,7 @@ import PrimaryButtonLink from "../components/PrimaryButtonLink";
 import getSpotifyAccessToken from "../spotify/getAccessToken";
 
 // protect route util
-import withPublic from "../utils/withPublic";
+import withPublic from "../components/protected/withUnAuth";
 
 const Home: NextPage = () => {
     const [accessToken, setAccessToken] = useState<
