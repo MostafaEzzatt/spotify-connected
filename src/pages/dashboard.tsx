@@ -1,14 +1,26 @@
-import Image from "next/image";
 import React, { useEffect } from "react";
 import catchErrors from "../utils/catchError";
 
-// types
+// spotify
 import getRequests from "../spotify/getRequest";
 import paths from "../spotify/requestPaths";
+
+// Components
+import SectionHeading from "../components/typography/SectionHeading";
+
+// types
 import type PlayListResponse from "../types/playListResponse";
 import { profileResponse } from "../types/spotifyAPIProfileResponse";
 import artistsResponse from "../types/spotifyArtistsResponse";
 import topTracksResponse from "../types/spotifyTopTacks";
+
+// Route Protection
+import ProfileHeader from "../components/ProfileHeader";
+import withAuth from "../utils/withAuth";
+import CustomeImage from "../components/CustomeImage";
+import Link from "next/link";
+import SectionTemplate from "../components/SectionTemplate";
+import Playlists from "../components/Playlists";
 
 const Dashboard = () => {
     const [profile, setProfile] = React.useState<profileResponse | null>(null);
@@ -41,32 +53,18 @@ const Dashboard = () => {
 
     return (
         <>
-            <div>Dashboard</div>
+            <ProfileHeader profile={profile} />
 
-            <div className="flex gap-6 text-white">
-                {playLists && Array.isArray(playLists?.items)
-                    ? playLists.items.map((item) => {
-                          return (
-                              <div key={item.id}>
-                                  {item.name}{" "}
-                                  {item.images.length >= 1 && (
-                                      <Image
-                                          src={item.images[0].url}
-                                          alt={item.name}
-                                          width={100}
-                                          height={100}
-                                      />
-                                  )}
-                              </div>
-                          );
-                      })
-                    : "No playlists"}
+            <div className="container mx-auto flex flex-col gap-y-6 pt-6 px-6 2xl:px-0 max-w-screen-lg">
+                <SectionTemplate title="Top Artists">
+                    <Playlists playLists={playLists} show={8} />
+                </SectionTemplate>
             </div>
         </>
     );
 };
 
-export default Dashboard;
+export default withAuth(Dashboard);
 
 // TODO
 // 1. Get profile data from Spotify [done]
