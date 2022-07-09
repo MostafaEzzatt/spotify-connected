@@ -2,10 +2,10 @@ import { logout } from "../spotify/getAccessToken";
 
 const Logout = () => {
     return (
-        <div className="max-w-screen-lg mx-auto pt-6 absolute top-0 right-12">
+        <div className="max-w-screen-lg mx-auto pt-6 absolute top-0 right-12 z-10">
             <button
                 onClick={() => logout()}
-                className="bg-black px-4 text-white py-1 rounded-full"
+                className="bg-black px-4 text-white py-1 rounded-full font-bold"
             >
                 Logout
             </button>

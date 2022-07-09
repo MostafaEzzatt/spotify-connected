@@ -16,11 +16,13 @@ const ProfileHeader = (props: Props) => {
     return (
         <div className="w-full py-8 bg-headerBackground bg-gradient-to-b from-transparent to-black/50">
             <div className="flex flex-col md:flex-row items-center gap-6 mx-auto max-w-max">
-                <CustomeImage
-                    image={profile.images[0].url}
-                    alt={profile.display_name}
-                    type={profile.type}
-                />
+                <div className="px-6 sm:px-0">
+                    <CustomeImage
+                        image={profile.images[0].url}
+                        alt={profile.display_name}
+                        type={profile.type}
+                    />
+                </div>
 
                 <div className="mt-2">
                     <h2 className="text-xs font-bold uppercase text-white">
