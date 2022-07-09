@@ -18,7 +18,7 @@ const TopArtists = (props: Props) => {
     return (
         <div>
             <>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {artists.items
                         .slice(0, show || artists.items.length)
                         .map((item) => {
@@ -27,8 +27,8 @@ const TopArtists = (props: Props) => {
                                     href={`/top_artists/${item.id}`}
                                     key={item.id}
                                 >
-                                    <a>
-                                        <div className="bg-listBlock p-4 flex flex-col items-center justify-end h-full">
+                                    <a className="mx-auto w-list-item sm:w-full">
+                                        <div className="bg-listBlock p-4 flex flex-col items-center justify-end h-full w-list-item sm:w-full">
                                             <div className="mb-2 w-full">
                                                 <CustomeImage
                                                     image={item?.images[0]?.url}

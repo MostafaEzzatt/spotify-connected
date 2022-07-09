@@ -61,6 +61,10 @@ const Dashboard = () => {
                     <TopArtists artists={topArtists} show={8} />
                 </SectionTemplate>
 
+                <SectionTemplate title="Top Tracks" distenation="/top_tracks">
+                    <TopTracks tracks={topTracks} show={8} />
+                </SectionTemplate>
+
                 <SectionTemplate title="Playlists" distenation="/playlists">
                     <Playlists playLists={playLists} show={8} />
                 </SectionTemplate>

@@ -1,9 +1,8 @@
 import type {
+    album,
     available_markets,
     external_urls,
-    images,
     resonse,
-    album,
 } from "./spotifyAPIResponse";
 
 export default interface topTracksResponse extends resonse {
@@ -12,7 +11,7 @@ export default interface topTracksResponse extends resonse {
 
 interface item {
     album: album;
-    artists: images[];
+    artists: artist[];
     available_markets: available_markets;
     disc_number: number;
     duration_ms: number;
@@ -27,5 +26,14 @@ interface item {
     preview_url: string;
     track_number: number;
     type: "track";
+    uri: string;
+}
+
+interface artist {
+    external_urls: external_urls;
+    href: string;
+    id: string;
+    name: string;
+    type: "artist";
     uri: string;
 }

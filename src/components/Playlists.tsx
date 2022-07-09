@@ -12,7 +12,7 @@ const Playlists = (props: Props) => {
     return (
         <>
             {playLists && (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {playLists.items
                         .slice(0, show || playLists.items.length)
                         .map((item) => {
@@ -21,7 +21,7 @@ const Playlists = (props: Props) => {
                                     href={`/playlist/${item.id}`}
                                     key={item.id}
                                 >
-                                    <a>
+                                    <a className="mx-auto w-list-item sm:w-full">
                                         <div className="bg-listBlock p-4 flex flex-col items-center justify-end h-full">
                                             <div className="mb-2 w-full">
                                                 <CustomeImage
@@ -31,7 +31,7 @@ const Playlists = (props: Props) => {
                                                 />
                                             </div>
                                             <div className="max-w-full w-full">
-                                                <div className="font-bold uppercase truncate text-white">
+                                                <div className="font-bold uppercase truncate text-white max-w-full">
                                                     {item.name || "No Name"}
                                                 </div>
                                                 <div className="text-sm text-gray-400">

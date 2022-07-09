@@ -3,6 +3,10 @@ module.exports = {
     content: ["./src/**/*.{js,ts,jsx,tsx}"],
     theme: {
         extend: {
+            width: {
+                "list-item": "13.75rem",
+            },
+
             colors: {
                 base: "#121212",
                 highlight: {
