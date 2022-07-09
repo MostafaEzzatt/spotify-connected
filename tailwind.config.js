@@ -12,6 +12,7 @@ module.exports = {
                 avatar: "#282828",
                 headerBackground: "#535353",
                 listBlock: "#181818",
+                link: "#b3b3b3",
             },
         },
     },

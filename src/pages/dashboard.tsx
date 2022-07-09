@@ -21,6 +21,7 @@ import CustomeImage from "../components/CustomeImage";
 import Link from "next/link";
 import SectionTemplate from "../components/SectionTemplate";
 import Playlists from "../components/Playlists";
+import Logout from "../components/Logout";
 
 const Dashboard = () => {
     const [profile, setProfile] = React.useState<profileResponse | null>(null);
@@ -53,10 +54,11 @@ const Dashboard = () => {
 
     return (
         <>
+            <Logout />
             <ProfileHeader profile={profile} />
 
             <div className="container mx-auto flex flex-col gap-y-6 pt-6 px-6 2xl:px-0 max-w-screen-lg">
-                <SectionTemplate title="Top Artists">
+                <SectionTemplate title="Playlists" distenation="/playlists">
                     <Playlists playLists={playLists} show={8} />
                 </SectionTemplate>
             </div>

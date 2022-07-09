@@ -3,14 +3,15 @@ import SectionHeading from "./typography/SectionHeading";
 
 type Props = {
     title: string;
+    distenation: string;
     children: React.ReactNode;
 };
 
 const SectionTemplate = (props: Props) => {
-    const { title, children } = props;
+    const { title, children, distenation } = props;
     return (
         <section>
-            <SectionHeading txt={title} />
+            <SectionHeading txt={title} distenation={distenation} />
 
             {children}
         </section>
