@@ -6,16 +6,14 @@ import getRequests from "../spotify/getRequest";
 import paths from "../spotify/requestPaths";
 
 // Components
-import Logout from "../components/Logout";
+import LoadingFullScreen from "../components/LoadingFullScreen";
 import Playlists from "../components/Playlists";
-import ProfileHeader from "../components/ProfileHeader";
+import SectionTemplate from "../components/SectionTemplate";
 import TopArtists from "../components/TopArtists";
 import TopTracks from "../components/TopTracks";
-import SectionTemplate from "../components/SectionTemplate";
 
 // types
 import type PlayListResponse from "../types/playListResponse";
-import { profileResponse } from "../types/spotifyAPIProfileResponse";
 import artistsResponse from "../types/spotifyArtistsResponse";
 import topTracksResponse from "../types/spotifyTopTacks";
 
@@ -23,7 +21,6 @@ import topTracksResponse from "../types/spotifyTopTacks";
 import withAuth from "../components/protected/withAuth";
 
 const Dashboard = () => {
-    const [profile, setProfile] = React.useState<profileResponse | null>(null);
     const [playLists, setPlayLists] = React.useState<PlayListResponse | null>(
         null
     );
@@ -34,11 +31,10 @@ const Dashboard = () => {
         null
     );
 
+    const [loading, setLoading] = React.useState(true);
+
     useEffect(() => {
         const getProfile = async () => {
-            const profileData = await getRequests(paths.profile);
-            setProfile(profileData);
-
             const playlistData = await getRequests(paths.playlists);
             setPlayLists(playlistData);
 
@@ -47,16 +43,17 @@ const Dashboard = () => {
 
             const topTracksData = await getRequests(paths.topTracksShort);
             setTopTracks(topTracksData);
+
+            setLoading(false);
         };
         catchErrors(getProfile)();
     }, []);
 
+    if (loading) return <LoadingFullScreen />;
+
     return (
         <>
-            <Logout />
-            <ProfileHeader profile={profile} />
-
-            <div className="container mx-auto flex flex-col gap-y-10 pt-6 px-6 2xl:px-0 max-w-screen-lg">
+            <div className="container mx-auto flex max-w-screen-lg flex-col gap-y-10 px-6 pt-6 2xl:px-0">
                 <SectionTemplate title="Top Artists" distenation="/top_artists">
                     <TopArtists artists={topArtists} show={8} />
                 </SectionTemplate>

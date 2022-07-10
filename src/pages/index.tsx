@@ -27,12 +27,12 @@ const Home: NextPage = () => {
     if (loading) return <LoadingFullScreen />;
 
     if (typeof accessToken !== "boolean" && !accessToken)
-        <div className="w-full h-screen flex justify-center items-center bg-base text-teal-300">
+        <div className="flex h-screen w-full items-center justify-center bg-base text-teal-300">
             Something went wrong
         </div>;
     return (
         <>
-            <div className="w-full min-h-screen flex justify-center items-center">
+            <div className="flex min-h-screen w-full items-center justify-center">
                 {!accessToken && (
                     <PrimaryButtonLink
                         href="/api/login"
