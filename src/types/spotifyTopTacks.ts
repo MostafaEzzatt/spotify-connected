@@ -9,7 +9,7 @@ export default interface topTracksResponse extends resonse {
     items: item[];
 }
 
-interface item {
+export interface item {
     album: album;
     artists: artist[];
     available_markets: available_markets;

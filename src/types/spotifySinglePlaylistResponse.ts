@@ -1,50 +1,54 @@
-import { resonse } from "./spotifyAPIResponse";
+import {
+    resonse,
+    external_urls,
+    followers,
+    images,
+    owner,
+} from "./spotifyAPIResponse";
+
+import { item } from "./spotifyTopTacks";
 
 export default interface spotifySinglePlaylistResponse extends resonse {
-    collaborative: true;
-    description: "string";
-    external_urls: {
-        spotify: "string";
-    };
-    followers: {
-        href: "string";
-        total: 0;
-    };
-    href: "string";
-    id: "string";
-    images: [
-        {
-            url: "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228\n";
-            height: 300;
-            width: 300;
-        }
-    ];
-    name: "string";
-    owner: {
-        external_urls: {
-            spotify: "string";
-        };
-        followers: {
-            href: "string";
-            total: 0;
-        };
-        href: "string";
-        id: "string";
-        type: "user";
-        uri: "string";
-        display_name: "string";
-    };
+    collaborative: boolean;
+    description: string;
+    external_urls: external_urls;
+    followers: followers;
+    id: string;
+    images: images[];
+    name: string;
+    owner: playListOwner;
     public: true;
-    snapshot_id: "string";
-    tracks: {
-        href: "https://api.spotify.com/v1/me/shows?offset=0&limit=20\n";
-        items: [{}];
-        limit: 20;
-        next: "https://api.spotify.com/v1/me/shows?offset=1&limit=1";
-        offset: 0;
-        previous: "https://api.spotify.com/v1/me/shows?offset=1&limit=1";
-        total: 4;
+    snapshot_id: string;
+    tracks: playListTracks;
+    type: "playlist";
+    uri: string;
+}
+
+interface playListTrackItem {
+    added_at: string;
+    added_by: {
+        external_urls: external_urls;
+        href: string;
+        id: string;
+        type: "user";
+        uri: string;
     };
-    type: "string";
-    uri: "string";
+    is_local: boolean;
+    primary_color: string | null;
+    track: item;
+    video_thumbnail: { url: string | null };
+}
+
+interface playListOwner extends owner {
+    followers: followers;
+}
+
+interface playListTracks {
+    href: string;
+    items: playListTrackItem[];
+    limit: number;
+    next: string;
+    offset: number;
+    previous: string;
+    total: number;
 }
