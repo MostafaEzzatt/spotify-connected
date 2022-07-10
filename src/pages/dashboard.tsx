@@ -62,7 +62,11 @@ const Dashboard = () => {
                     <TopTracks tracks={topTracks} show={8} />
                 </SectionTemplate>
 
-                <SectionTemplate title="Playlists" distenation="/playlists">
+                <SectionTemplate
+                    title="Playlists"
+                    distenation="/playlists"
+                    seeMore
+                >
                     <Playlists playLists={playLists} show={8} />
                 </SectionTemplate>
             </div>

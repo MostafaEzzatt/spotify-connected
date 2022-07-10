@@ -12,17 +12,17 @@ const Playlists = (props: Props) => {
     return (
         <>
             {playLists && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     {playLists.items
                         .slice(0, show || playLists.items.length)
                         .map((item) => {
                             return (
                                 <Link
-                                    href={`/playlist/${item.id}`}
+                                    href={`/playlists/${item.id}`}
                                     key={item.id}
                                 >
                                     <a className="mx-auto w-list-item sm:w-full">
-                                        <div className="bg-listBlock p-4 flex flex-col items-center justify-end h-full">
+                                        <div className="flex h-full flex-col items-center justify-end bg-listBlock p-4">
                                             <div className="mb-2 w-full">
                                                 <CustomeImage
                                                     image={item?.images[0]?.url}
@@ -30,8 +30,8 @@ const Playlists = (props: Props) => {
                                                     type={item.type}
                                                 />
                                             </div>
-                                            <div className="max-w-full w-full">
-                                                <div className="font-bold uppercase truncate text-white max-w-full">
+                                            <div className="w-full max-w-full">
+                                                <div className="max-w-full truncate font-bold uppercase text-white">
                                                     {item.name || "No Name"}
                                                 </div>
                                                 <div className="text-sm text-gray-400">

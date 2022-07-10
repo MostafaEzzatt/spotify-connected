@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import getRequests from "../../spotify/getRequest";
 import paths from "../../spotify/requestPaths";
@@ -12,6 +13,8 @@ interface props {
 
 const Layout = ({ children }: props) => {
     const [profile, setProfile] = React.useState<profileResponse | null>(null);
+    const { pathname } = useRouter();
+    const dontShowProfileInPath = ["/playlists/[id]"];
 
     useEffect(() => {
         const getProfile = async () => {
@@ -24,7 +27,9 @@ const Layout = ({ children }: props) => {
     return (
         <>
             <Logout />
-            <ProfileHeader profile={profile} />
+            {!dontShowProfileInPath.includes(pathname) && (
+                <ProfileHeader profile={profile} />
+            )}
 
             {children}
         </>
