@@ -12,6 +12,8 @@ type Props = {
 const ProfileHeader = (props: Props) => {
     const { profile } = props;
 
+    console.log(profile);
+
     if (!profile) return <></>;
 
     return (

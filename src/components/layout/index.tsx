@@ -18,6 +18,9 @@ const Layout = ({ children }: props) => {
 
     useEffect(() => {
         const getProfile = async () => {
+            const tokenType = localStorage.getItem("spotify_access_token");
+            if (tokenType === undefined || tokenType === null || !tokenType)
+                return;
             const profileData = await getRequests(paths.profile);
             setProfile(profileData);
         };
@@ -27,6 +30,7 @@ const Layout = ({ children }: props) => {
     return (
         <>
             <Logout />
+
             {!dontShowProfileInPath.includes(pathname) && (
                 <ProfileHeader profile={profile} />
             )}
