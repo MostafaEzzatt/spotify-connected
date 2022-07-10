@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import getRequests from "../../spotify/getRequest";
 import paths from "../../spotify/requestPaths";
+import { Keys } from "../../spotify/spotifyLocalStorageKeys";
 import { profileResponse } from "../../types/spotifyAPIProfileResponse";
 import catchErrors from "../../utils/catchError";
 import Logout from "../Logout";
@@ -12,20 +13,24 @@ interface props {
 }
 
 const Layout = ({ children }: props) => {
-    const [profile, setProfile] = React.useState<profileResponse | null>(null);
+    const [profile, setProfile] = useState<profileResponse | null>(null);
     const { pathname } = useRouter();
     const dontShowProfileInPath = ["/playlists/[id]"];
 
     useEffect(() => {
         const getProfile = async () => {
-            const tokenType = localStorage.getItem("spotify_access_token");
-            if (tokenType === undefined || tokenType === null || !tokenType)
+            const tokenType = localStorage.getItem(Keys.accessToken);
+
+            if (tokenType === null || tokenType === undefined || !tokenType)
                 return;
+
             const profileData = await getRequests(paths.profile);
             setProfile(profileData);
         };
         catchErrors(getProfile)();
-    }, []);
+
+        console.log(localStorage.getItem(Keys.accessToken), "locals");
+    }, [children]);
 
     return (
         <>

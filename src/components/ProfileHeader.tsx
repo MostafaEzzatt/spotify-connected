@@ -12,8 +12,6 @@ type Props = {
 const ProfileHeader = (props: Props) => {
     const { profile } = props;
 
-    console.log(profile);
-
     if (!profile) return <></>;
 
     return (
@@ -44,7 +42,7 @@ const ProfileHeader = (props: Props) => {
 
                     {profile.type === "playlist" && (
                         <p
-                            className="playlist-description mt-8 text-sm text-gray-200 text-gray-200"
+                            className="playlist-description mt-8 text-sm text-gray-200"
                             dangerouslySetInnerHTML={{
                                 __html: profile.description,
                             }}

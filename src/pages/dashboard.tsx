@@ -71,13 +71,3 @@ const Dashboard = () => {
 };
 
 export default withAuth(Dashboard);
-
-// TODO
-// 1. Get profile data from Spotify [done]
-// 2. Display profile data
-// 3. Get user's Playlists from Spotify [done]
-// 4. Get User's top tracks from Spotify [done]
-// 5. Get User's top artists from Spotify [done]
-// 7. create protected routes components [done]
-// 8. create component to display playlists [done]
-// 9. create component to display top artists [done]
