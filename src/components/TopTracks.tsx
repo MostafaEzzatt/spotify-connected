@@ -17,13 +17,13 @@ const TopTracks = (props: Props) => {
         <table className="w-full text-left text-gray-200">
             <thead>
                 <tr>
-                    <th className="pb-4 border-b border-slate-700 pl-4">#</th>
-                    <th className="pb-4 border-b border-slate-700">Image</th>
-                    <th className="pb-4 border-b border-slate-700">Name</th>
-                    <th className="pb-4 border-b border-slate-700 hidden md:visible">
+                    <th className="border-b border-slate-700 pb-4 pl-4">#</th>
+                    <th className="border-b border-slate-700 pb-4">Image</th>
+                    <th className="border-b border-slate-700 pb-4">Name</th>
+                    <th className="hidden border-b border-slate-700 pb-4 md:table-cell">
                         Artist(s)
                     </th>
-                    <th className="pb-4 border-b border-slate-700 pr-4">
+                    <th className="border-b border-slate-700 pb-4 pr-4">
                         Duration
                     </th>
                 </tr>
@@ -35,12 +35,12 @@ const TopTracks = (props: Props) => {
                         return (
                             <tr
                                 key={item.id}
-                                className="hover:bg-white/5 transition-colors hover:text-white"
+                                className="transition-colors hover:bg-white/5 hover:text-white"
                             >
-                                <td className="pt-2 px-2 border-b border-slate-700/30 pl-4">
+                                <td className="border-b border-slate-700/30 px-2 pt-2 pl-4">
                                     {index + 1}
                                 </td>
-                                <td className="pt-2 px-2 border-b border-slate-700/30">
+                                <td className="border-b border-slate-700/30 px-2 pt-2">
                                     <Image
                                         src={item.album.images[0].url}
                                         alt={item.name}
@@ -49,22 +49,22 @@ const TopTracks = (props: Props) => {
                                         className="rounded"
                                     />
                                 </td>
-                                <td className="pt-2 px-2 border-b border-slate-700/30">
+                                <td className="border-b border-slate-700/30 px-2 pt-2">
                                     {item.name}
                                 </td>
-                                <td className="pt-2 px-2 border-b border-slate-700/30 hidden md:visible">
+                                <td className="hidden border-b border-slate-700/30 px-2 pt-2 md:table-cell">
                                     <div className="flex gap-1">
                                         {item.artists.map((artist) => (
                                             <span
                                                 key={artist.id}
-                                                className="bg-white/10 px-3 py-1 rounded"
+                                                className="rounded bg-white/10 px-3 py-1"
                                             >
                                                 {artist.name}
                                             </span>
                                         ))}
                                     </div>
                                 </td>
-                                <td className="pt-2 px-2 border-b border-slate-700/30 pr-4">
+                                <td className="border-b border-slate-700/30 px-2 pt-2 pr-4">
                                     {convertSecondsToTime(item.duration_ms)}
                                 </td>
                             </tr>
