@@ -14,15 +14,15 @@ const CustomeImage = (props: Props) => {
                 <Image
                     src={image}
                     alt={alt}
-                    width={375}
-                    height={375}
-                    className={`w-full h-full bg-avatar ${
+                    width={200}
+                    height={200}
+                    className={`h-full w-full bg-avatar ${
                         type === "user" ? "rounded-full" : "rounded"
                     }`}
                 />
             ) : (
                 <div
-                    className={`w-full h-full  bg-avatar ${
+                    className={`h-full w-full  bg-avatar ${
                         type === "user" ? "rounded-full" : "rounded"
                     }`}
                 ></div>

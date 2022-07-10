@@ -22,7 +22,7 @@ const Playlists = (props: Props) => {
                                     key={item.id}
                                 >
                                     <a className="mx-auto w-list-item sm:w-full">
-                                        <div className="flex h-full flex-col items-center justify-end bg-listBlock p-4">
+                                        <div className="flex h-full flex-col items-center justify-end bg-listBlock p-4 drop-shadow transition-shadow hover:drop-shadow-md">
                                             <div className="mb-2 w-full">
                                                 <CustomeImage
                                                     image={item?.images[0]?.url}

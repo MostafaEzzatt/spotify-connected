@@ -39,6 +39,15 @@ const ProfileHeader = (props: Props) => {
                             ? profile.display_name
                             : profile.name}
                     </h1>
+
+                    {profile.type === "playlist" && (
+                        <p
+                            className="playlist-description mt-8 text-sm text-gray-200 text-gray-200"
+                            dangerouslySetInnerHTML={{
+                                __html: profile.description,
+                            }}
+                        ></p>
+                    )}
                 </div>
             </div>
         </div>

@@ -38,7 +38,7 @@ const Dashboard = () => {
             const playlistData = await getRequests(paths.playlists);
             setPlayLists(playlistData);
 
-            const topArtistsData = await getRequests(paths.topArtistsMedium);
+            const topArtistsData = await getRequests(paths.topArtistsShort);
             setTopArtists(topArtistsData);
 
             const topTracksData = await getRequests(paths.topTracksShort);
@@ -62,11 +62,7 @@ const Dashboard = () => {
                     <TopTracks tracks={topTracks} show={8} />
                 </SectionTemplate>
 
-                <SectionTemplate
-                    title="Playlists"
-                    distenation="/playlists"
-                    seeMore
-                >
+                <SectionTemplate title="Playlists" distenation="/playlists">
                     <Playlists playLists={playLists} show={8} />
                 </SectionTemplate>
             </div>

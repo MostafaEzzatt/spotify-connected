@@ -18,7 +18,7 @@ const TopArtists = (props: Props) => {
     return (
         <div>
             <>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     {artists.items
                         .slice(0, show || artists.items.length)
                         .map((item) => {
@@ -28,7 +28,7 @@ const TopArtists = (props: Props) => {
                                     key={item.id}
                                 >
                                     <a className="mx-auto w-list-item sm:w-full">
-                                        <div className="bg-listBlock p-4 flex flex-col items-center justify-end h-full w-list-item sm:w-full">
+                                        <div className="flex h-full w-list-item flex-col items-center justify-end bg-listBlock p-4 drop-shadow transition-shadow hover:drop-shadow-md sm:w-full">
                                             <div className="mb-2 w-full">
                                                 <CustomeImage
                                                     image={item?.images[0]?.url}
@@ -36,8 +36,8 @@ const TopArtists = (props: Props) => {
                                                     type={"user"}
                                                 />
                                             </div>
-                                            <div className="max-w-full w-full">
-                                                <div className="font-bold uppercase truncate text-white">
+                                            <div className="w-full max-w-full">
+                                                <div className="truncate font-bold uppercase text-white">
                                                     {item.name || "No Name"}
                                                 </div>
                                                 <div className="text-sm text-gray-400">

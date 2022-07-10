@@ -6,4 +6,8 @@
     body{
         @apply bg-base
     }
+
+    .playlist-description a{
+        @apply text-highlight hover:text-highlight-press transition-colors
+    }
 }
