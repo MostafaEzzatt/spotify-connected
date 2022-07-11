@@ -21,6 +21,7 @@ import topTracksResponse from "../types/spotifyTopTacks";
 import withAuth from "../components/protected/withAuth";
 import { trpc } from "../utils/trpc";
 import { profileResponse } from "../types/spotifyAPIProfileResponse";
+import convertSecondsToTime from "../utils/convertSecondsToTime";
 
 const Dashboard = ({ profile }: { profile: profileResponse }) => {
     const [playLists, setPlayLists] = React.useState<PlayListResponse | null>(
@@ -35,9 +36,18 @@ const Dashboard = ({ profile }: { profile: profileResponse }) => {
 
     const [loading, setLoading] = React.useState(true);
 
+    // create user and profile
     const { mutateAsync: createUserProfile } =
         trpc.useMutation("profile.create");
     const { mutateAsync: createUser } = trpc.useMutation("user.create");
+
+    // get current user from db
+    const { data: userDB } = trpc.useQuery(["user.get", { id: profile.id }]);
+
+    // update user and profile
+    const { mutateAsync: updateUserProfile } =
+        trpc.useMutation("profile.update");
+    const { mutateAsync: updateUser } = trpc.useMutation("user.update");
 
     useEffect(() => {
         const getData = async () => {
@@ -59,21 +69,41 @@ const Dashboard = ({ profile }: { profile: profileResponse }) => {
         if (!playLists || !topArtists || !topTracks || !profile) return;
 
         try {
-            const user = await createUser({
+            const profileData = {
+                playlists: JSON.stringify(playLists),
+                topArtists: JSON.stringify(topArtists),
+                topTracks: JSON.stringify(topArtists),
+            };
+
+            const userData = {
                 spotifyId: profile.id,
                 displayName: profile.display_name,
                 email: profile.email,
                 image: profile?.images[0]?.url || "",
                 country: profile.country,
-            });
+            };
+            if (!userDB?.id) {
+                const addUser = await createUser(userData);
+                if (addUser) {
+                    await createUserProfile({
+                        ...profileData,
+                        userId: addUser.id,
+                    });
+                }
+            } else {
+                // check if 254 hours have passed since last update
+                const currentTime = new Date().getTime();
+                const userUpdatedAt = new Date(userDB.updatedAt).getTime();
+                const diff = convertSecondsToTime(currentTime - userUpdatedAt);
+                const split = diff.split(":");
 
-            if (user) {
-                await createUserProfile({
-                    playlists: JSON.stringify(playLists),
-                    topArtists: JSON.stringify(topArtists),
-                    topTracks: JSON.stringify(topArtists),
-                    userId: user.id,
-                });
+                if (split.length == 3 && parseInt(split[0] || "") >= 24) {
+                    await updateUser({ ...userData, id: userDB.id });
+                    await updateUserProfile({
+                        ...profileData,
+                        userId: userDB.id,
+                    });
+                }
             }
         } catch (error: any) {
             if (error.data.httpStatus === 500) {

@@ -9,6 +9,9 @@ type Props = {
 
 const Playlists = (props: Props) => {
     const { playLists, show } = props;
+
+    if (!playLists) return <></>;
+
     return (
         <>
             {playLists && (

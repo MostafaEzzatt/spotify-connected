@@ -7,9 +7,8 @@ function convertSecondsToTime(seconds: number) {
     const h = Math.floor(convertedSeconds / 3600);
     const m = Math.floor((convertedSeconds % 3600) / 60);
     const s = Math.floor(convertedSeconds % 60);
-
     // return hours, minutes and seconds
-    return `${h > 0 ? h + ":" : ""}${m > 0 ? m + ":" : ""}${s}`;
+    return `${h > 0 ? h + ":" : ""}${m > 0 ? m + ":" : ""}${s || "00"}`;
 }
 
 export default convertSecondsToTime;

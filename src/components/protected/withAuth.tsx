@@ -5,6 +5,7 @@ import paths from "../../spotify/requestPaths";
 import { Keys } from "../../spotify/spotifyLocalStorageKeys";
 import { profileResponse } from "../../types/spotifyAPIProfileResponse";
 import catchErrors from "../../utils/catchError";
+import LoadingFullScreen from "../LoadingFullScreen";
 
 export default function withAuth<T>(
     WrappedComponent: React.ComponentType<T | any>
@@ -12,11 +13,13 @@ export default function withAuth<T>(
     function Auth(props: T) {
         const router = useRouter();
         const [profile, setProfile] = useState<profileResponse | null>(null);
+        const [loading, setLoading] = useState(true);
 
         useEffect(() => {
             async function getProfile() {
                 const requestProfile = await getRequests(paths.profile);
                 setProfile(requestProfile);
+                setLoading(false);
             }
 
             if (
@@ -29,6 +32,7 @@ export default function withAuth<T>(
             }
         }, [router]);
 
+        if (loading) return <LoadingFullScreen />;
         return <WrappedComponent {...props} profile={profile} />;
     }
 
