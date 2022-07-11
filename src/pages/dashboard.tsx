@@ -34,7 +34,7 @@ const Dashboard = () => {
     const [loading, setLoading] = React.useState(true);
 
     useEffect(() => {
-        const getProfile = async () => {
+        const getData = async () => {
             const playlistData = await getRequests(paths.playlists);
             setPlayLists(playlistData);
 
@@ -46,8 +46,12 @@ const Dashboard = () => {
 
             setLoading(false);
         };
-        catchErrors(getProfile)();
+        catchErrors(getData)();
     }, []);
+
+    const createProfile = () => {
+        console.log({ playLists, topArtists, topTracks });
+    };
 
     if (loading) return <LoadingFullScreen />;
 
@@ -66,6 +70,12 @@ const Dashboard = () => {
                     <Playlists playLists={playLists} show={8} />
                 </SectionTemplate>
             </div>
+            <button
+                onClick={() => createProfile()}
+                className="sticky bottom-6 left-6 rounded-full bg-highlight-press px-4 py-2 text-white drop-shadow-md hover:bg-highlight"
+            >
+                Create Profile
+            </button>
         </>
     );
 };

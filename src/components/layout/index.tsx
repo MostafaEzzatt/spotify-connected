@@ -28,8 +28,6 @@ const Layout = ({ children }: props) => {
             setProfile(profileData);
         };
         catchErrors(getProfile)();
-
-        console.log(localStorage.getItem(Keys.accessToken), "locals");
     }, [children]);
 
     return (
