@@ -19,7 +19,7 @@ const ProfileHeader = (props: Props) => {
             <div className="mx-auto flex max-w-max flex-col items-center gap-6 md:flex-row">
                 <div className="px-6 sm:px-0">
                     <CustomeImage
-                        image={profile.images[0].url}
+                        image={profile?.images[0]?.url}
                         alt={
                             profile.type == "user"
                                 ? profile.display_name

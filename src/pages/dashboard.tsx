@@ -19,8 +19,10 @@ import topTracksResponse from "../types/spotifyTopTacks";
 
 // Route Protection
 import withAuth from "../components/protected/withAuth";
+import { trpc } from "../utils/trpc";
+import { profileResponse } from "../types/spotifyAPIProfileResponse";
 
-const Dashboard = () => {
+const Dashboard = ({ profile }: { profile: profileResponse }) => {
     const [playLists, setPlayLists] = React.useState<PlayListResponse | null>(
         null
     );
@@ -32,6 +34,10 @@ const Dashboard = () => {
     );
 
     const [loading, setLoading] = React.useState(true);
+
+    const { mutateAsync: createUserProfile } =
+        trpc.useMutation("profile.create");
+    const { mutateAsync: createUser } = trpc.useMutation("user.create");
 
     useEffect(() => {
         const getData = async () => {
@@ -49,8 +55,31 @@ const Dashboard = () => {
         catchErrors(getData)();
     }, []);
 
-    const createProfile = () => {
-        console.log({ playLists, topArtists, topTracks });
+    const createProfile = async () => {
+        if (!playLists || !topArtists || !topTracks || !profile) return;
+
+        try {
+            const user = await createUser({
+                spotifyId: profile.id,
+                displayName: profile.display_name,
+                email: profile.email,
+                image: profile?.images[0]?.url || "",
+                country: profile.country,
+            });
+
+            if (user) {
+                await createUserProfile({
+                    playlists: JSON.stringify(playLists),
+                    topArtists: JSON.stringify(topArtists),
+                    topTracks: JSON.stringify(topArtists),
+                    userId: user.id,
+                });
+            }
+        } catch (error: any) {
+            if (error.data.httpStatus === 500) {
+                console.log("500 error");
+            }
+        }
     };
 
     if (loading) return <LoadingFullScreen />;

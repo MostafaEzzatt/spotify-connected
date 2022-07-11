@@ -1,13 +1,16 @@
 import Image from "next/image";
 
 type Props = {
-    image: string;
+    image: string | undefined;
     alt: string;
     type: string;
 };
 
 const CustomeImage = (props: Props) => {
     const { image, alt, type } = props;
+
+    if (!image) return <></>;
+
     return (
         <div className="w-full max-w-full">
             {typeof image === "string" ? (

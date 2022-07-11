@@ -9,18 +9,21 @@ const defaultProfileSelect = Prisma.validator<Prisma.ProfileSelect>()({
     topTracks: true,
 });
 
-export const profile = createRouter().mutation("create", {
+export const profileRoute = createRouter().mutation("create", {
     input: z.object({
         playlists: z.string(),
         topArtists: z.string(),
         topTracks: z.string(),
+        userId: z.string(),
     }),
     async resolve({ ctx, input }) {
+        console.log(input);
         return await ctx.prisma.profile.create({
             data: {
                 playlists: input.playlists,
                 topArtists: input.topArtists,
                 topTracks: input.topTracks,
+                userId: input.userId,
             },
             select: defaultProfileSelect,
         });
