@@ -19,9 +19,9 @@ import topTracksResponse from "../types/spotifyTopTacks";
 
 // Route Protection
 import withAuth from "../components/protected/withAuth";
-import { trpc } from "../utils/trpc";
 import { profileResponse } from "../types/spotifyAPIProfileResponse";
-import convertSecondsToTime from "../utils/convertSecondsToTime";
+import isTwentyFourHoursPass from "../utils/isTwentyFourHoursPass";
+import { trpc } from "../utils/trpc";
 
 const Dashboard = ({ profile }: { profile: profileResponse }) => {
     const [playLists, setPlayLists] = React.useState<PlayListResponse | null>(
@@ -91,13 +91,7 @@ const Dashboard = ({ profile }: { profile: profileResponse }) => {
                     });
                 }
             } else {
-                // check if 254 hours have passed since last update
-                const currentTime = new Date().getTime();
-                const userUpdatedAt = new Date(userDB.updatedAt).getTime();
-                const diff = convertSecondsToTime(currentTime - userUpdatedAt);
-                const split = diff.split(":");
-
-                if (split.length == 3 && parseInt(split[0] || "") >= 24) {
+                if (isTwentyFourHoursPass(userDB)) {
                     await updateUser({ ...userData, id: userDB.id });
                     await updateUserProfile({
                         ...profileData,
