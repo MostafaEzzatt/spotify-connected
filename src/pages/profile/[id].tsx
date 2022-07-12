@@ -23,7 +23,7 @@ type Props = {
 
 const UserProfile = (props: Props) => {
     const { profile, topArtists, playlists, topTracks } = props;
-    console.log({ topArtists, playlists, topTracks });
+
     return (
         <>
             <ProfileHeader profile={profile} />
@@ -80,7 +80,7 @@ export async function getStaticProps({
         });
 
         if (!user) return { notFound: true };
-        console.log(user);
+
         const userData: profileResponse = {
             id: user.spotifyId,
             display_name: user.displayName,

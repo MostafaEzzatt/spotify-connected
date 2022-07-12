@@ -4,10 +4,12 @@ type Props = {
     image: string | undefined;
     alt: string;
     type: string;
+    width?: number;
+    height?: number;
 };
 
 const CustomeImage = (props: Props) => {
-    const { image, alt, type } = props;
+    const { image, alt, type, width = 200, height = 200 } = props;
 
     if (!image) return <></>;
 
@@ -17,8 +19,8 @@ const CustomeImage = (props: Props) => {
                 <Image
                     src={image}
                     alt={alt}
-                    width={200}
-                    height={200}
+                    width={width}
+                    height={height}
                     className={`h-full w-full bg-avatar ${
                         type === "user" ? "rounded-full" : "rounded"
                     }`}

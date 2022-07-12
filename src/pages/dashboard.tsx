@@ -92,7 +92,6 @@ const Dashboard = ({ profile }: { profile: profileResponse }) => {
                 }
             } else {
                 if (isTwentyFourHoursPass(userDB)) {
-                    console.log(profileData);
                     await updateUser({ ...userData, id: userDB.id });
                     await updateUserProfile({
                         ...profileData,
@@ -111,7 +110,7 @@ const Dashboard = ({ profile }: { profile: profileResponse }) => {
 
     return (
         <>
-            <div className="container mx-auto flex max-w-screen-lg flex-col gap-y-10 px-6 pt-6 2xl:px-0">
+            <div className="container mx-auto flex max-w-screen-lg flex-col gap-y-10 px-6 pt-6 pb-14 2xl:px-0">
                 <SectionTemplate title="Top Artists" distenation="/top_artists">
                     <TopArtists artists={topArtists} show={8} />
                 </SectionTemplate>

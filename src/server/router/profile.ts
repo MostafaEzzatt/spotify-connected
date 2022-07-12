@@ -18,7 +18,6 @@ export const profileRoute = createRouter()
             userId: z.string(),
         }),
         async resolve({ ctx, input }) {
-            console.log(input);
             return await ctx.prisma.profile.create({
                 data: {
                     playlists: input.playlists,
