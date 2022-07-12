@@ -72,7 +72,7 @@ const Dashboard = ({ profile }: { profile: profileResponse }) => {
             const profileData = {
                 playlists: JSON.stringify(playLists),
                 topArtists: JSON.stringify(topArtists),
-                topTracks: JSON.stringify(topArtists),
+                topTracks: JSON.stringify(topTracks),
             };
 
             const userData = {
@@ -92,6 +92,7 @@ const Dashboard = ({ profile }: { profile: profileResponse }) => {
                 }
             } else {
                 if (isTwentyFourHoursPass(userDB)) {
+                    console.log(profileData);
                     await updateUser({ ...userData, id: userDB.id });
                     await updateUserProfile({
                         ...profileData,
