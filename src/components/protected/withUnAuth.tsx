@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { Keys } from "../../spotify/spotifyLocalStorageKeys";
 
 export default function withPublic<T>(

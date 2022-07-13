@@ -22,6 +22,7 @@ import withAuth from "../components/protected/withAuth";
 import { profileResponse } from "../types/spotifyAPIProfileResponse";
 import isTwentyFourHoursPass from "../utils/isTwentyFourHoursPass";
 import { trpc } from "../utils/trpc";
+import { toast } from "react-toastify";
 
 const Dashboard = ({ profile }: { profile: profileResponse }) => {
     const [playLists, setPlayLists] = React.useState<PlayListResponse | null>(
@@ -35,6 +36,7 @@ const Dashboard = ({ profile }: { profile: profileResponse }) => {
     );
 
     const [loading, setLoading] = React.useState(true);
+    const [profileUpdated, setProfileUpdated] = React.useState<boolean>(false);
 
     // create user and profile
     const { mutateAsync: createUserProfile } =
@@ -67,6 +69,11 @@ const Dashboard = ({ profile }: { profile: profileResponse }) => {
 
     const createProfile = async () => {
         if (!playLists || !topArtists || !topTracks || !profile) return;
+        if (profileUpdated) {
+            toast.info("Profile updated less than 24 hours ago", {
+                toastId: "profileUpdatedLessThan24Hours",
+            });
+        }
 
         try {
             const profileData = {
@@ -82,13 +89,20 @@ const Dashboard = ({ profile }: { profile: profileResponse }) => {
                 image: profile?.images[0]?.url || "",
                 country: profile.country,
             };
+
             if (!userDB?.id) {
                 const addUser = await createUser(userData);
+
                 if (addUser) {
                     await createUserProfile({
                         ...profileData,
                         userId: addUser.id,
                     });
+
+                    toast.success("Profile created", {
+                        toastId: "profileCreated",
+                    });
+                    setProfileUpdated(true);
                 }
             } else {
                 if (isTwentyFourHoursPass(userDB)) {
@@ -97,9 +111,20 @@ const Dashboard = ({ profile }: { profile: profileResponse }) => {
                         ...profileData,
                         userId: userDB.id,
                     });
+                    toast.success("Profile updated", {
+                        toastId: "profileUpdated",
+                    });
+                    setProfileUpdated(true);
+                } else {
+                    toast.info("Profile updated less than 24 hours ago", {
+                        toastId: "profileUpdatedLessThan24Hours",
+                    });
                 }
             }
         } catch (error: any) {
+            toast.error(`Something went wrong`, {
+                toastId: "profileError",
+            });
             if (error.data.httpStatus === 500) {
                 console.log("500 error");
             }

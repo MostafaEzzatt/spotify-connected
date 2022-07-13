@@ -6,6 +6,7 @@ import type { AppRouter } from "../server/router";
 import "../styles/globals.css";
 
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
@@ -14,6 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 position="top-center"
                 pauseOnFocusLoss={false}
                 pauseOnHover={false}
+                theme="colored"
             />
             <Component {...pageProps} />
         </Layout>
