@@ -12,8 +12,6 @@ const Playlists = (props: Props) => {
 
     if (!playLists) return <></>;
 
-    console.log(playLists);
-
     return (
         <>
             {playLists && (

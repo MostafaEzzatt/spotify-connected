@@ -5,9 +5,16 @@ import Layout from "../components/layout";
 import type { AppRouter } from "../server/router";
 import "../styles/globals.css";
 
+import { ToastContainer } from "react-toastify";
+
 function MyApp({ Component, pageProps }: AppProps) {
     return (
         <Layout>
+            <ToastContainer
+                position="top-center"
+                pauseOnFocusLoss={false}
+                pauseOnHover={false}
+            />
             <Component {...pageProps} />
         </Layout>
     );
