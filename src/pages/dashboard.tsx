@@ -1,5 +1,10 @@
 import React, { useEffect } from "react";
+import { toast } from "react-toastify";
+
+// utils
 import catchErrors from "../utils/catchError";
+import isTwentyFourHoursPass from "../utils/isTwentyFourHoursPass";
+import { trpc } from "../utils/trpc";
 
 // spotify
 import getRequests from "../spotify/getRequest";
@@ -14,15 +19,14 @@ import TopTracks from "../components/TopTracks";
 
 // types
 import type PlayListResponse from "../types/playListResponse";
+import { profileResponse } from "../types/spotifyAPIProfileResponse";
 import artistsResponse from "../types/spotifyArtistsResponse";
 import topTracksResponse from "../types/spotifyTopTacks";
 
 // Route Protection
 import withAuth from "../components/protected/withAuth";
-import { profileResponse } from "../types/spotifyAPIProfileResponse";
-import isTwentyFourHoursPass from "../utils/isTwentyFourHoursPass";
-import { trpc } from "../utils/trpc";
-import { toast } from "react-toastify";
+
+// TEST
 
 const Dashboard = ({ profile }: { profile: profileResponse }) => {
     const [playLists, setPlayLists] = React.useState<PlayListResponse | null>(

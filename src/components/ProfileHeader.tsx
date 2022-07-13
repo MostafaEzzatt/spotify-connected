@@ -18,15 +18,17 @@ const ProfileHeader = (props: Props) => {
         <div className="w-full bg-headerBackground bg-gradient-to-b from-transparent to-black/50 py-8">
             <div className="mx-auto flex max-w-max flex-col items-center gap-6 md:flex-row">
                 <div className="px-6 sm:px-0">
-                    <CustomeImage
-                        image={profile?.images[0]?.url}
-                        alt={
-                            profile.type == "user"
-                                ? profile.display_name
-                                : profile.name
-                        }
-                        type={profile.type}
-                    />
+                    {profile.images.length > 0 && (
+                        <CustomeImage
+                            image={profile?.images[0]?.url}
+                            alt={
+                                profile.type == "user"
+                                    ? profile.display_name
+                                    : profile.name
+                            }
+                            type={profile.type}
+                        />
+                    )}
                 </div>
 
                 <div className="mt-2 max-w-full px-6 xl:px-0">
