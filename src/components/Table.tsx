@@ -68,7 +68,10 @@ const Table = ({ heading, body }: props) => {
             <tbody>
                 {body.map((item, idx) => {
                     return (
-                        <tr key={`${item}${idx}`}>
+                        <tr
+                            key={`${item}${idx}`}
+                            className="bg-base transition-colors hover:bg-white/5"
+                        >
                             {item.map((item, idx) => {
                                 return (
                                     <td
