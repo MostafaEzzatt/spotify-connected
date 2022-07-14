@@ -59,7 +59,6 @@ export const refreshToken = async () => {
 
         // check if the response is valid
         if (response.data?.error) {
-            console.log("found error");
             logout();
             return;
         }

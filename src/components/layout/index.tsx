@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import getRequests from "../../spotify/getRequest";
@@ -16,6 +17,7 @@ const Layout = ({ children }: props) => {
     const [profile, setProfile] = useState<profileResponse | null>(null);
     const { pathname } = useRouter();
     const dontShowProfileInPath = ["/playlists/[id]"];
+    const dontDisplayLayout = ["/profile/[id]"];
 
     useEffect(() => {
         const getProfile = async () => {
@@ -28,12 +30,15 @@ const Layout = ({ children }: props) => {
             setProfile(profileData);
         };
         catchErrors(getProfile)();
-
-        console.log(localStorage.getItem(Keys.accessToken), "locals");
     }, [children]);
+
+    if (dontDisplayLayout.includes(pathname)) return <>{children}</>;
 
     return (
         <>
+            <Head>
+                <title>Spotify Connect</title>
+            </Head>
             <Logout />
 
             {!dontShowProfileInPath.includes(pathname) && (

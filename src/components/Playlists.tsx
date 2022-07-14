@@ -9,6 +9,9 @@ type Props = {
 
 const Playlists = (props: Props) => {
     const { playLists, show } = props;
+
+    if (!playLists) return <></>;
+
     return (
         <>
             {playLists && (
@@ -32,6 +35,8 @@ const Playlists = (props: Props) => {
                                                 image={item?.images[0]?.url}
                                                 alt={item.name}
                                                 type={item.type}
+                                                width={375}
+                                                height={375}
                                             />
                                         </div>
                                         <div className="w-full max-w-full">

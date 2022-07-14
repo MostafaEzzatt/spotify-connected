@@ -38,6 +38,8 @@ const TopArtists = (props: Props) => {
                                                 image={item?.images[0]?.url}
                                                 alt={item.name}
                                                 type={"user"}
+                                                width={375}
+                                                height={375}
                                             />
                                         </div>
                                         <div className="w-full max-w-full">
