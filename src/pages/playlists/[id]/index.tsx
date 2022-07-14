@@ -71,16 +71,19 @@ const List = () => {
                                             {index + 1}
                                         </td>
                                         <td className="border-b border-slate-700/30 px-2 pt-2">
-                                            <Image
-                                                src={
-                                                    item.track.album.images[0]
-                                                        .url
-                                                }
-                                                alt={item.track.name}
-                                                width="50"
-                                                height="50"
-                                                className="rounded"
-                                            />
+                                            {item.track.album.images.length >
+                                                0 && (
+                                                <CustomeImage
+                                                    image={
+                                                        item.track.album
+                                                            .images[0]?.url
+                                                    }
+                                                    alt={item.track.album.name}
+                                                    width={50}
+                                                    height={50}
+                                                    type="track"
+                                                />
+                                            )}
                                         </td>
                                         <td className="border-b border-slate-700/30 px-2 pt-2">
                                             {item.track.name}
