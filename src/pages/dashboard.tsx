@@ -74,6 +74,15 @@ const Dashboard = ({ profile }: { profile: profileResponse }) => {
         catchErrors(getData)();
     }, []);
 
+    const handleProfileAlreadyUpdated = () => {
+        toast.info("Profile updated less than 24 hours ago", {
+            toastId: "profileUpdatedLessThan24Hours",
+        });
+
+        if (!profileUpdated) setProfileUpdated(true);
+        setProfileLink(`${window.location.origin}/profile/${profile.id}`);
+    };
+
     const createProfile = async () => {
         if (!playLists || !topArtists || !topTracks || !profile) {
             toast.info("Something went wrong, please try again later", {
@@ -85,10 +94,7 @@ const Dashboard = ({ profile }: { profile: profileResponse }) => {
         toast.info("Working on it...", { toastId: "workingOnIt" });
 
         if (profileUpdated) {
-            toast.info("Profile updated less than 24 hours ago", {
-                toastId: "profileUpdatedLessThan24Hours",
-            });
-            setProfileLink(`${window.location.origin}/profile/${profile.id}`);
+            handleProfileAlreadyUpdated();
             return;
         }
 
@@ -139,9 +145,7 @@ const Dashboard = ({ profile }: { profile: profileResponse }) => {
                         `${window.location.origin}/profile/${userDB.id}`
                     );
                 } else {
-                    toast.info("Profile updated less than 24 hours ago", {
-                        toastId: "profileUpdatedLessThan24Hours",
-                    });
+                    handleProfileAlreadyUpdated();
                 }
             }
         } catch (error: any) {
