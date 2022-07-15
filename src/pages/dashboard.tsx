@@ -25,10 +25,13 @@ import topTracksResponse from "../types/spotifyTopTacks";
 
 // Route Protection
 import withAuth from "../components/protected/withAuth";
+import TopPageMessage from "../components/TopPageMessage";
 
 // TEST
 
 const Dashboard = ({ profile }: { profile: profileResponse }) => {
+    const [profileLink, setProfileLink] = React.useState<string>("");
+
     const [playLists, setPlayLists] = React.useState<PlayListResponse | null>(
         null
     );
@@ -72,11 +75,21 @@ const Dashboard = ({ profile }: { profile: profileResponse }) => {
     }, []);
 
     const createProfile = async () => {
-        if (!playLists || !topArtists || !topTracks || !profile) return;
+        if (!playLists || !topArtists || !topTracks || !profile) {
+            toast.info("Something went wrong, please try again later", {
+                toastId: "somethingMessing",
+            });
+            return;
+        }
+
+        toast.info("Working on it...", { toastId: "workingOnIt" });
+
         if (profileUpdated) {
             toast.info("Profile updated less than 24 hours ago", {
                 toastId: "profileUpdatedLessThan24Hours",
             });
+            setProfileLink(`${window.location.origin}/profile/${profile.id}`);
+            return;
         }
 
         try {
@@ -107,6 +120,9 @@ const Dashboard = ({ profile }: { profile: profileResponse }) => {
                         toastId: "profileCreated",
                     });
                     setProfileUpdated(true);
+                    setProfileLink(
+                        `${window.location.origin}/profile/${addUser.id}`
+                    );
                 }
             } else {
                 if (isTwentyFourHoursPass(userDB)) {
@@ -119,6 +135,9 @@ const Dashboard = ({ profile }: { profile: profileResponse }) => {
                         toastId: "profileUpdated",
                     });
                     setProfileUpdated(true);
+                    setProfileLink(
+                        `${window.location.origin}/profile/${userDB.id}`
+                    );
                 } else {
                     toast.info("Profile updated less than 24 hours ago", {
                         toastId: "profileUpdatedLessThan24Hours",
@@ -139,6 +158,10 @@ const Dashboard = ({ profile }: { profile: profileResponse }) => {
 
     return (
         <>
+            <TopPageMessage
+                message={profileLink}
+                resetMessage={setProfileLink}
+            />
             <div className="container mx-auto flex max-w-screen-lg flex-col gap-y-10 px-6 pt-6 pb-14 2xl:px-0">
                 <SectionTemplate title="Top Artists" distenation="/top_artists">
                     <TopArtists artists={topArtists} show={8} />
