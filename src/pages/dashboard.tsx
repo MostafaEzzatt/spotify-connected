@@ -127,7 +127,7 @@ const Dashboard = ({ profile }: { profile: profileResponse }) => {
                     });
                     setProfileUpdated(true);
                     setProfileLink(
-                        `${window.location.origin}/profile/${addUser.id}`
+                        `${window.location.origin}/profile/${addUser.spotifyId}`
                     );
                 }
             } else {
@@ -142,7 +142,7 @@ const Dashboard = ({ profile }: { profile: profileResponse }) => {
                     });
                     setProfileUpdated(true);
                     setProfileLink(
-                        `${window.location.origin}/profile/${userDB.id}`
+                        `${window.location.origin}/profile/${userDB.spotifyId}`
                     );
                 } else {
                     handleProfileAlreadyUpdated();
