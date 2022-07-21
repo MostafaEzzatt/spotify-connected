@@ -41,14 +41,6 @@ export const refreshToken = async () => {
             console.error("No refresh token available");
             logout();
         }
-        // if (
-        //     !LOCALSTORAGE_VALUES.refreshToken ||
-        //     LOCALSTORAGE_VALUES.refreshToken === "undefined" ||
-        //     Date.now() - Number(LOCALSTORAGE_VALUES.timestamp) / 1000 < 1000
-        // ) {
-        //     console.error("No refresh token available");
-        //     logout();
-        // }
 
         // Use `/refresh_token` endpoint from our Node app
         const requestRefresh = await fetch(

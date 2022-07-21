@@ -1,11 +1,10 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useQuery } from "react-query";
 import getRequests from "../../spotify/getRequest";
 import paths from "../../spotify/requestPaths";
-import { Keys } from "../../spotify/spotifyLocalStorageKeys";
-import { profileResponse } from "../../types/spotifyAPIProfileResponse";
-import catchErrors from "../../utils/catchError";
+import LoadingFullScreen from "../LoadingFullScreen";
 import Logout from "../Logout";
 import ProfileHeader from "../ProfileHeader";
 
@@ -14,26 +13,19 @@ interface props {
 }
 
 const Layout = ({ children }: props) => {
-    const [profile, setProfile] = useState<profileResponse | null>(null);
+    const {
+        data: profile,
+        isLoading,
+        isError,
+    } = useQuery(["profile"], () => getRequests(paths.profile));
     const { pathname } = useRouter();
     const dontShowProfileInPath = ["/playlists/[id]"];
     const dontDisplayLayout = ["/profile/[id]"];
 
-    useEffect(() => {
-        const getProfile = async () => {
-            const tokenType = localStorage.getItem(Keys.accessToken);
-
-            if (tokenType === null || tokenType === undefined || !tokenType)
-                return;
-
-            const profileData = await getRequests(paths.profile);
-            setProfile(profileData);
-        };
-        catchErrors(getProfile)();
-    }, [children]);
-
     if (dontDisplayLayout.includes(pathname)) return <>{children}</>;
 
+    if (isLoading) return <LoadingFullScreen />;
+    if (isError) return <h1> Sorry something went wrong</h1>;
     return (
         <>
             <Head>

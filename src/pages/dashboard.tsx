@@ -26,23 +26,31 @@ import topTracksResponse from "../types/spotifyTopTacks";
 // Route Protection
 import withAuth from "../components/protected/withAuth";
 import TopPageMessage from "../components/TopPageMessage";
+import { useQuery } from "react-query";
 
 // TEST
 
 const Dashboard = ({ profile }: { profile: profileResponse }) => {
     const [profileLink, setProfileLink] = React.useState<string>("");
 
-    const [playLists, setPlayLists] = React.useState<PlayListResponse | null>(
-        null
-    );
-    const [topArtists, setTopArtists] = React.useState<artistsResponse | null>(
-        null
-    );
-    const [topTracks, setTopTracks] = React.useState<topTracksResponse | null>(
-        null
-    );
+    const {
+        data: playLists,
+        isLoading: isLoadingPlayLists,
+        isError: isErrorPlayLists,
+    } = useQuery(["playlists"], () => getRequests(paths.playlists));
 
-    const [loading, setLoading] = React.useState(true);
+    const {
+        data: topArtists,
+        isLoading: isLoadingTopArtists,
+        isError: isErrorTopArtists,
+    } = useQuery(["topArtists"], () => getRequests(paths.topArtistsShort));
+
+    const {
+        data: topTracks,
+        isLoading: isLoadingTopTracks,
+        isError: isErrorTopTracks,
+    } = useQuery(["topTracks"], () => getRequests(paths.topTracksShort));
+
     const [profileUpdated, setProfileUpdated] = React.useState<boolean>(false);
 
     // create user and profile
@@ -57,22 +65,6 @@ const Dashboard = ({ profile }: { profile: profileResponse }) => {
     const { mutateAsync: updateUserProfile } =
         trpc.useMutation("profile.update");
     const { mutateAsync: updateUser } = trpc.useMutation("user.update");
-
-    useEffect(() => {
-        const getData = async () => {
-            const playlistData = await getRequests(paths.playlists);
-            setPlayLists(playlistData);
-
-            const topArtistsData = await getRequests(paths.topArtistsShort);
-            setTopArtists(topArtistsData);
-
-            const topTracksData = await getRequests(paths.topTracksShort);
-            setTopTracks(topTracksData);
-
-            setLoading(false);
-        };
-        catchErrors(getData)();
-    }, []);
 
     const handleProfileAlreadyUpdated = () => {
         toast.info("Profile updated less than 24 hours ago", {
@@ -158,7 +150,11 @@ const Dashboard = ({ profile }: { profile: profileResponse }) => {
         }
     };
 
-    if (loading) return <LoadingFullScreen />;
+    if (isLoadingPlayLists || isLoadingTopArtists || isLoadingTopTracks)
+        return <LoadingFullScreen />;
+
+    if (isErrorPlayLists || isErrorTopArtists || isErrorTopTracks)
+        return <h1>Something went wrong</h1>;
 
     return (
         <>
