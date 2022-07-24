@@ -80,7 +80,6 @@ const Table = ({ heading, body }: props) => {
                             className="bg-base transition-colors hover:bg-white/5"
                         >
                             {item.map((item, idx) => {
-                                console.log(item);
                                 return (
                                     <td
                                         key={`${item}${idx}`}

@@ -20,37 +20,43 @@ const Playlists = (props: Props) => {
                         .slice(0, show || playLists.items.length)
                         .map((item) => {
                             return (
-                                // <Link
-                                // href={`/playlists/${item.id}`}
-                                // key={item.id}
-                                // >
-                                // <a className="mx-auto w-list-item sm:w-full">
-                                <div
-                                    className="mx-auto w-list-item sm:w-full"
+                                <Link
+                                    href={item.external_urls.spotify}
                                     key={item.id}
                                 >
-                                    <div className="flex h-full flex-col items-center justify-end bg-listBlock p-4 drop-shadow transition-shadow hover:drop-shadow-md">
-                                        <div className="mb-2 w-full">
-                                            <CustomeImage
-                                                image={item?.images[0]?.url}
-                                                alt={item.name}
-                                                type={item.type}
-                                                width={375}
-                                                height={375}
-                                            />
-                                        </div>
-                                        <div className="w-full max-w-full">
-                                            <div className="max-w-full truncate font-bold uppercase text-white">
-                                                {item.name || "No Name"}
+                                    <a
+                                        className="mx-auto w-list-item sm:w-full"
+                                        target="_blank"
+                                    >
+                                        <div
+                                            className="mx-auto w-list-item sm:w-full"
+                                            key={item.id}
+                                        >
+                                            <div className="flex h-full flex-col items-center justify-end bg-listBlock p-4 drop-shadow transition-shadow hover:drop-shadow-md">
+                                                <div className="mb-2 w-full">
+                                                    <CustomeImage
+                                                        image={
+                                                            item?.images[0]?.url
+                                                        }
+                                                        alt={item.name}
+                                                        type={item.type}
+                                                        width={375}
+                                                        height={375}
+                                                    />
+                                                </div>
+                                                <div className="w-full max-w-full">
+                                                    <div className="max-w-full truncate font-bold uppercase text-white">
+                                                        {item.name || "No Name"}
+                                                    </div>
+                                                    <div className="text-sm text-gray-400">
+                                                        {item.tracks.total}{" "}
+                                                        tracks
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div className="text-sm text-gray-400">
-                                                {item.tracks.total} tracks
-                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                // </a>
-                                // </Link>
+                                    </a>
+                                </Link>
                             );
                         })}
                 </div>
