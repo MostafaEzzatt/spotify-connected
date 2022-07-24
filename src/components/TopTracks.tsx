@@ -33,6 +33,10 @@ const TopTracks = (props: Props) => {
             text: "Duration",
             hiddenSM: false,
         },
+        {
+            text: "link",
+            hiddenSM: false,
+        },
     ];
 
     const body = tracks?.items
@@ -67,6 +71,11 @@ const TopTracks = (props: Props) => {
                 {
                     type: BodyType.NUMBER as BodyType.NUMBER,
                     data: track.duration_ms,
+                    hiddenSM: false,
+                },
+                {
+                    type: BodyType.LINK as BodyType.LINK,
+                    data: track.external_urls.spotify,
                     hiddenSM: false,
                 },
             ];
