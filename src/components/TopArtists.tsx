@@ -19,7 +19,7 @@ const TopArtists = () => {
     if (isError)
         return (
             <div className="rounded bg-slate-700 py-3 text-center text-lg font-bold text-gray-200">
-                Something Went Wrong{" "}
+                Something Went Wrong
             </div>
         );
 
