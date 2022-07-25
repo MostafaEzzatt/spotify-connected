@@ -28,128 +28,104 @@ import TopPageMessage from "../components/TopPageMessage";
 const Dashboard = ({ profile }: { profile: profileResponse }) => {
     const [profileLink, setProfileLink] = React.useState<string>("");
 
-    const {
-        data: playLists,
-        isLoading: isLoadingPlayLists,
-        isError: isErrorPlayLists,
-    } = useQuery(["playlists"], () => getRequests(paths.playlists));
+    // const [profileUpdated, setProfileUpdated] = React.useState<boolean>(false);
 
-    const {
-        data: topArtists,
-        isLoading: isLoadingTopArtists,
-        isError: isErrorTopArtists,
-    } = useQuery(["topArtists"], () => getRequests(paths.topArtistsShort));
+    // // create user and profile
+    // const { mutateAsync: createUserProfile } =
+    //     trpc.useMutation("profile.create");
+    // const { mutateAsync: createUser } = trpc.useMutation("user.create");
 
-    const {
-        data: topTracks,
-        isLoading: isLoadingTopTracks,
-        isError: isErrorTopTracks,
-    } = useQuery(["topTracks"], () => getRequests(paths.topTracksShort));
+    // // get current user from db
+    // const { data: userDB } = trpc.useQuery(["user.get", { id: profile.id }]);
 
-    const [profileUpdated, setProfileUpdated] = React.useState<boolean>(false);
+    // // update user and profile
+    // const { mutateAsync: updateUserProfile } =
+    //     trpc.useMutation("profile.update");
+    // const { mutateAsync: updateUser } = trpc.useMutation("user.update");
 
-    // create user and profile
-    const { mutateAsync: createUserProfile } =
-        trpc.useMutation("profile.create");
-    const { mutateAsync: createUser } = trpc.useMutation("user.create");
+    // const handleProfileAlreadyUpdated = () => {
+    //     toast.info("Profile updated less than 24 hours ago", {
+    //         toastId: "profileUpdatedLessThan24Hours",
+    //     });
 
-    // get current user from db
-    const { data: userDB } = trpc.useQuery(["user.get", { id: profile.id }]);
+    //     if (!profileUpdated) setProfileUpdated(true);
+    //     setProfileLink(`${window.location.origin}/profile/${profile.id}`);
+    // };
 
-    // update user and profile
-    const { mutateAsync: updateUserProfile } =
-        trpc.useMutation("profile.update");
-    const { mutateAsync: updateUser } = trpc.useMutation("user.update");
+    // const createProfile = async () => {
+    //     if (!playLists || !topArtists || !topTracks || !profile) {
+    //         toast.info("Something went wrong, please try again later", {
+    //             toastId: "somethingMessing",
+    //         });
+    //         return;
+    //     }
 
-    const handleProfileAlreadyUpdated = () => {
-        toast.info("Profile updated less than 24 hours ago", {
-            toastId: "profileUpdatedLessThan24Hours",
-        });
+    //     toast.info("Working on it...", { toastId: "workingOnIt" });
 
-        if (!profileUpdated) setProfileUpdated(true);
-        setProfileLink(`${window.location.origin}/profile/${profile.id}`);
-    };
+    //     if (profileUpdated) {
+    //         handleProfileAlreadyUpdated();
+    //         return;
+    //     }
 
-    const createProfile = async () => {
-        if (!playLists || !topArtists || !topTracks || !profile) {
-            toast.info("Something went wrong, please try again later", {
-                toastId: "somethingMessing",
-            });
-            return;
-        }
+    //     try {
+    //         const profileData = {
+    //             playlists: JSON.stringify(playLists),
+    //             topArtists: JSON.stringify(topArtists),
+    //             topTracks: JSON.stringify(topTracks),
+    //         };
 
-        toast.info("Working on it...", { toastId: "workingOnIt" });
+    //         const userData = {
+    //             spotifyId: profile.id,
+    //             displayName: profile.display_name,
+    //             email: profile.email,
+    //             image: profile?.images[0]?.url || "",
+    //             country: profile.country,
+    //         };
 
-        if (profileUpdated) {
-            handleProfileAlreadyUpdated();
-            return;
-        }
+    //         if (!userDB?.id) {
+    //             const addUser = await createUser(userData);
 
-        try {
-            const profileData = {
-                playlists: JSON.stringify(playLists),
-                topArtists: JSON.stringify(topArtists),
-                topTracks: JSON.stringify(topTracks),
-            };
+    //             if (addUser) {
+    //                 await createUserProfile({
+    //                     ...profileData,
+    //                     userId: addUser.id,
+    //                 });
 
-            const userData = {
-                spotifyId: profile.id,
-                displayName: profile.display_name,
-                email: profile.email,
-                image: profile?.images[0]?.url || "",
-                country: profile.country,
-            };
-
-            if (!userDB?.id) {
-                const addUser = await createUser(userData);
-
-                if (addUser) {
-                    await createUserProfile({
-                        ...profileData,
-                        userId: addUser.id,
-                    });
-
-                    toast.success("Profile created", {
-                        toastId: "profileCreated",
-                    });
-                    setProfileUpdated(true);
-                    setProfileLink(
-                        `${window.location.origin}/profile/${addUser.spotifyId}`
-                    );
-                }
-            } else {
-                if (isTwentyFourHoursPass(userDB)) {
-                    await updateUser({ ...userData, id: userDB.id });
-                    await updateUserProfile({
-                        ...profileData,
-                        userId: userDB.id,
-                    });
-                    toast.success("Profile updated", {
-                        toastId: "profileUpdated",
-                    });
-                    setProfileUpdated(true);
-                    setProfileLink(
-                        `${window.location.origin}/profile/${userDB.spotifyId}`
-                    );
-                } else {
-                    handleProfileAlreadyUpdated();
-                }
-            }
-        } catch (error: any) {
-            toast.error(`Something went wrong`, {
-                toastId: "profileError",
-            });
-            if (error.data.httpStatus === 500) {
-                console.log("500 error");
-            }
-        }
-    };
-
-    if (isLoadingPlayLists || isLoadingTopArtists || isLoadingTopTracks)
-        return <LoadingFullScreen />;
-
-    if (isErrorPlayLists || isErrorTopArtists || isErrorTopTracks)
-        return <h1>Something went wrong</h1>;
+    //                 toast.success("Profile created", {
+    //                     toastId: "profileCreated",
+    //                 });
+    //                 setProfileUpdated(true);
+    //                 setProfileLink(
+    //                     `${window.location.origin}/profile/${addUser.spotifyId}`
+    //                 );
+    //             }
+    //         } else {
+    //             if (isTwentyFourHoursPass(userDB)) {
+    //                 await updateUser({ ...userData, id: userDB.id });
+    //                 await updateUserProfile({
+    //                     ...profileData,
+    //                     userId: userDB.id,
+    //                 });
+    //                 toast.success("Profile updated", {
+    //                     toastId: "profileUpdated",
+    //                 });
+    //                 setProfileUpdated(true);
+    //                 setProfileLink(
+    //                     `${window.location.origin}/profile/${userDB.spotifyId}`
+    //                 );
+    //             } else {
+    //                 handleProfileAlreadyUpdated();
+    //             }
+    //         }
+    //     } catch (error: any) {
+    //         toast.error(`Something went wrong`, {
+    //             toastId: "profileError",
+    //         });
+    //         if (error.data.httpStatus === 500) {
+    //             console.log("500 error");
+    //         }
+    //     }
+    // };
 
     return (
         <>
@@ -164,14 +140,20 @@ const Dashboard = ({ profile }: { profile: profileResponse }) => {
 
                 <Playlists />
             </div>
-            <button
+            {/* <button
                 onClick={() => createProfile()}
                 className="sticky bottom-6 left-6 rounded-full bg-highlight-press px-4 py-2 text-white drop-shadow-md hover:bg-highlight"
             >
                 Create Profile
-            </button>
+            </button> */}
         </>
     );
 };
 
 export default withAuth(Dashboard);
+
+// TODO:
+// [x] Remove All Requests From Dashboard
+// [ ] Disable Create Profile Untill Complete Finish Create App Context
+// [ ] Create App Context With React Context API
+// [ ] Create Indepenedt Component For Create User Profile
