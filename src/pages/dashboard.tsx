@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { toast } from "react-toastify";
 
 // utils
-import catchErrors from "../utils/catchError";
 import isTwentyFourHoursPass from "../utils/isTwentyFourHoursPass";
 import { trpc } from "../utils/trpc";
 
@@ -13,20 +12,16 @@ import paths from "../spotify/requestPaths";
 // Components
 import LoadingFullScreen from "../components/LoadingFullScreen";
 import Playlists from "../components/Playlists";
-import SectionTemplate from "../components/SectionTemplate";
 import TopArtists from "../components/TopArtists";
 import TopTracks from "../components/TopTracks";
 
 // types
-import type PlayListResponse from "../types/playListResponse";
 import { profileResponse } from "../types/spotifyAPIProfileResponse";
-import artistsResponse from "../types/spotifyArtistsResponse";
-import topTracksResponse from "../types/spotifyTopTacks";
 
 // Route Protection
+import { useQuery } from "react-query";
 import withAuth from "../components/protected/withAuth";
 import TopPageMessage from "../components/TopPageMessage";
-import { useQuery } from "react-query";
 
 // TEST
 
@@ -163,17 +158,11 @@ const Dashboard = ({ profile }: { profile: profileResponse }) => {
                 resetMessage={setProfileLink}
             />
             <div className="container mx-auto flex max-w-screen-lg flex-col gap-y-10 px-6 pt-6 pb-14 2xl:px-0">
-                <SectionTemplate title="Top Artists" distenation="/top_artists">
-                    <TopArtists artists={topArtists} show={8} />
-                </SectionTemplate>
+                <TopArtists />
 
-                <SectionTemplate title="Top Tracks" distenation="/top_tracks">
-                    <TopTracks tracks={topTracks} show={8} />
-                </SectionTemplate>
+                <TopTracks />
 
-                <SectionTemplate title="Playlists" distenation="/playlists">
-                    <Playlists playLists={playLists} show={8} />
-                </SectionTemplate>
+                <Playlists />
             </div>
             <button
                 onClick={() => createProfile()}

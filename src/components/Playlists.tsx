@@ -1,10 +1,7 @@
-import Link from "next/link";
 import { useQuery } from "react-query";
 import getRequests from "../spotify/getRequest";
 import paths from "../spotify/requestPaths";
-import playListResponse from "../types/playListResponse";
 import CardsList from "./cards";
-import CustomeImage from "./CustomeImage";
 import Loading from "./Loading";
 import SectionTemplate from "./SectionTemplate";
 

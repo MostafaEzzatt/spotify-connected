@@ -1,7 +1,6 @@
 import { useQuery } from "react-query";
 import getRequests from "../spotify/getRequest";
 import paths from "../spotify/requestPaths";
-import artistsResponse from "../types/spotifyArtistsResponse";
 import CardsList from "./cards";
 import Loading from "./Loading";
 import SectionTemplate from "./SectionTemplate";
