@@ -11,7 +11,7 @@ export default interface artistsResponse extends resonse {
     items: item[];
 }
 
-interface item {
+export interface item {
     external_urls: external_urls;
     followers: followers;
     genres: genres;

@@ -1,69 +1,34 @@
-import Link from "next/link";
-import React from "react";
+import { useQuery } from "react-query";
+import getRequests from "../spotify/getRequest";
+import paths from "../spotify/requestPaths";
 import artistsResponse from "../types/spotifyArtistsResponse";
-import CustomeImage from "./CustomeImage";
+import CardsList from "./cards";
+import Loading from "./Loading";
+import SectionTemplate from "./SectionTemplate";
 
-type Props = {
-    artists: artistsResponse | null;
-    show: number;
-};
+const TopArtists = () => {
+    const { data, isLoading, isError, status, ...other } = useQuery(
+        ["topArtists"],
+        () => getRequests(paths.topArtistsShort)
+    );
 
-const TopArtists = (props: Props) => {
-    const { artists, show } = props;
+    console.log({ data, isLoading, isError, other, type: "Top Artists" });
 
-    if (!artists) return <></>;
+    if (isLoading) return <Loading />;
 
-    if (artists.items.length === 0) return <></>;
+    if (isError)
+        return (
+            <div className="rounded bg-slate-700 py-3 text-center text-lg font-bold text-gray-200">
+                Something Went Wrong{" "}
+            </div>
+        );
+
+    if (status !== "success") return <Loading />;
 
     return (
-        <div>
-            <>
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                    {artists.items
-                        .slice(0, show || artists.items.length)
-                        .map((item) => {
-                            return (
-                                <Link
-                                    href={item.external_urls.spotify}
-                                    key={item.id}
-                                >
-                                    <a
-                                        className="mx-auto w-list-item sm:w-full"
-                                        target="_blank"
-                                    >
-                                        <div
-                                            className="mx-auto w-list-item sm:w-full"
-                                            key={item.id}
-                                        >
-                                            <div className="flex h-full w-list-item flex-col items-center justify-end bg-listBlock p-4 drop-shadow transition-shadow hover:drop-shadow-md sm:w-full">
-                                                <div className="mb-2 w-full">
-                                                    <CustomeImage
-                                                        image={
-                                                            item?.images[0]?.url
-                                                        }
-                                                        alt={item.name}
-                                                        type={"user"}
-                                                        width={375}
-                                                        height={375}
-                                                    />
-                                                </div>
-                                                <div className="w-full max-w-full">
-                                                    <div className="truncate font-bold uppercase text-white">
-                                                        {item.name || "No Name"}
-                                                    </div>
-                                                    <div className="text-sm text-gray-400">
-                                                        Artist
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </Link>
-                            );
-                        })}
-                </div>
-            </>
-        </div>
+        <SectionTemplate title="Top Artists" distenation="/top_artists">
+            <CardsList data={data} showLength={8} />
+        </SectionTemplate>
     );
 };
 
