@@ -22,7 +22,9 @@ const CustomeImage = (props: Props) => {
                     width={width}
                     height={height}
                     className={`h-full w-full bg-avatar ${
-                        type === "user" ? "rounded-full" : "rounded"
+                        type === "user" || type === "artist"
+                            ? "rounded-full"
+                            : "rounded"
                     }`}
                 />
             ) : (

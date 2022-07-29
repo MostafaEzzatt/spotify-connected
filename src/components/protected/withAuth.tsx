@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useQuery } from "react-query";
+import { useAppContext } from "../../context";
 import getRequests from "../../spotify/getRequest";
 import paths from "../../spotify/requestPaths";
 import { Keys } from "../../spotify/spotifyLocalStorageKeys";
@@ -17,6 +18,8 @@ export default function withAuth<T>(
             isError,
         } = useQuery(["profile"], () => getRequests(paths.profile));
 
+        const { setProfile } = useAppContext();
+
         useEffect(() => {
             if (
                 localStorage.getItem(Keys.accessToken) === null ||
@@ -25,6 +28,12 @@ export default function withAuth<T>(
                 router.replace("/");
             }
         }, [router]);
+
+        useEffect(() => {
+            if (profile) {
+                setProfile(profile);
+            }
+        }, [profile, setProfile]);
 
         if (isLoading) return <LoadingFullScreen />;
         if (isError) return <h1> Sorry something went wrong</h1>;

@@ -7,18 +7,21 @@ import "../styles/globals.css";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AppContextProvider from "../context";
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
-        <Layout>
-            <ToastContainer
-                position="top-center"
-                pauseOnFocusLoss={false}
-                pauseOnHover={false}
-                theme="colored"
-            />
-            <Component {...pageProps} />
-        </Layout>
+        <AppContextProvider>
+            <Layout>
+                <ToastContainer
+                    position="top-center"
+                    pauseOnFocusLoss={false}
+                    pauseOnHover={false}
+                    theme="colored"
+                />
+                <Component {...pageProps} />
+            </Layout>
+        </AppContextProvider>
     );
 }
 
