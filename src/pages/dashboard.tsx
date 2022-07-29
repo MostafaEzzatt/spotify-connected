@@ -154,6 +154,6 @@ export default withAuth(Dashboard);
 
 // TODO:
 // [x] Remove All Requests From Dashboard
-// [ ] Disable Create Profile Untill Complete Finish Create App Context
-// [ ] Create App Context With React Context API
+// [x] Disable Create Profile Until Complete Finish Create App Context
+// [x] Create App Context With React Context API
 // [ ] Create Indepenedt Component For Create User Profile
