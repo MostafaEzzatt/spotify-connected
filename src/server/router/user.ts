@@ -14,7 +14,7 @@ const defaultUserSelect = Prisma.validator<Prisma.UserSelect>()({
 });
 
 export const userRoute = createRouter()
-    .query("get", {
+    .mutation("get", {
         input: z.object({
             id: z.string(),
         }),
