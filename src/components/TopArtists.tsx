@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { useQuery } from "react-query";
+import { useAppContext } from "../context";
 import getRequests from "../spotify/getRequest";
 import paths from "../spotify/requestPaths";
 import CardsList from "./cards";
@@ -11,7 +13,15 @@ const TopArtists = () => {
         () => getRequests(paths.topArtistsShort)
     );
 
+    const { setTopArtists } = useAppContext();
+
     console.log({ data, isLoading, isError, other, type: "Top Artists" });
+
+    useEffect(() => {
+        if (data) {
+            setTopArtists(data);
+        }
+    }, [data, setTopArtists]);
 
     if (isLoading) return <Loading />;
 

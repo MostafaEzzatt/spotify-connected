@@ -36,6 +36,8 @@ const AppContextProvider = (props: Props) => {
     const [topTracks, setTopTracks] = useState<topTracksResponse | null>(null);
     const [playLists, setPlayLists] = useState<playListResponse | null>(null);
 
+    console.log({ profile, topArtists, topTracks, playLists }, "CTX");
+
     const val: AppContextInterface = {
         profile,
         setProfile,

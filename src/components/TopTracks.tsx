@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { useQuery } from "react-query";
+import { useAppContext } from "../context";
 import getRequests from "../spotify/getRequest";
 import paths from "../spotify/requestPaths";
 import topTracksResponse from "../types/spotifyTopTacks";
@@ -11,6 +13,14 @@ const TopTracks = () => {
         ["topTracks"],
         () => getRequests(paths.topTracksShort)
     );
+
+    const { setTopTracks } = useAppContext();
+
+    useEffect(() => {
+        if (data) {
+            setTopTracks(data);
+        }
+    }, [data, setTopTracks]);
 
     if (isLoading) return <Loading />;
 

@@ -12,11 +12,12 @@ const CardsList = (props: Props) => {
 
     return (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {data.items
-                .slice(0, showLength || data.items.length)
-                .map((item) => {
-                    return <CardItem item={item} key={item.id} />;
-                })}
+            {Array.isArray(data.items) &&
+                data.items
+                    ?.slice(0, showLength || data.items.length)
+                    .map((item) => {
+                        return <CardItem item={item} key={item.id} />;
+                    })}
         </div>
     );
 };

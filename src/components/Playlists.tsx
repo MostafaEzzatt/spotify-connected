@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { useQuery } from "react-query";
+import { useAppContext } from "../context";
 import getRequests from "../spotify/getRequest";
 import paths from "../spotify/requestPaths";
 import CardsList from "./cards";
@@ -9,6 +11,14 @@ const Playlists = () => {
     const { data, isLoading, isError, status } = useQuery(["playlists"], () =>
         getRequests(paths.playlists)
     );
+
+    const { setPlayLists } = useAppContext();
+
+    useEffect(() => {
+        if (data) {
+            setPlayLists(data);
+        }
+    }, [data, setPlayLists]);
 
     if (isLoading) return <Loading />;
 
