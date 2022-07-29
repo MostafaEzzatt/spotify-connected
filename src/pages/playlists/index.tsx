@@ -10,71 +10,55 @@ import catchErrors from "../../utils/catchError";
 import getUrlParam from "../../utils/getUrlParam";
 
 const Playlist = () => {
-    const [playlistData, setPlaylistData] =
-        React.useState<playListResponse | null>(null);
+    // const [playlistData, setPlaylistData] =
+    //     React.useState<playListResponse | null>(null);
 
-    const [next, setNext] = React.useState<string | null>(null);
-    const [loading, setLoading] = React.useState(true);
+    // const [next, setNext] = React.useState<string | null>(null);
+    // const [loading, setLoading] = React.useState(true);
 
-    useEffect(() => {
-        const getList = async () => {
-            const playlistsData = await getRequests(paths.playlists);
+    // useEffect(() => {
+    //     const getList = async () => {
+    //         const playlistsData = await getRequests(paths.playlists);
 
-            setPlaylistData(playlistsData);
-            setNext(playlistsData.next);
-            setLoading(false);
-        };
-        catchErrors(getList)();
-    }, []);
+    //         setPlaylistData(playlistsData);
+    //         setNext(playlistsData.next);
+    //         setLoading(false);
+    //     };
+    //     catchErrors(getList)();
+    // }, []);
 
-    const loadMore = async () => {
-        if (!next) return;
+    // const loadMore = async () => {
+    //     if (!next) return;
 
-        const offset = getUrlParam(next, "offset");
-        const nextRequest = await getRequests(
-            `${paths.playlists}?&offset=${offset}`
-        );
+    //     const offset = getUrlParam(next, "offset");
+    //     const nextRequest = await getRequests(
+    //         `${paths.playlists}?&offset=${offset}`
+    //     );
 
-        if (nextRequest.error) return;
+    //     if (nextRequest.error) return;
 
-        setNext(nextRequest.next);
+    //     setNext(nextRequest.next);
 
-        if (typeof playlistData !== undefined && typeof playlistData !== null) {
-            setPlaylistData((old) => {
-                let newData = {};
-                if (old !== null) {
-                    newData = {
-                        ...old,
-                        items: [...old.items, ...nextRequest.items],
-                    };
-                    return newData;
-                }
+    //     if (typeof playlistData !== undefined && typeof playlistData !== null) {
+    //         setPlaylistData((old) => {
+    //             let newData = {};
+    //             if (old !== null) {
+    //                 newData = {
+    //                     ...old,
+    //                     items: [...old.items, ...nextRequest.items],
+    //                 };
+    //                 return newData;
+    //             }
 
-                return nextRequest;
-            });
-        }
-    };
+    //             return nextRequest;
+    //         });
+    //     }
+    // };
 
-    if (loading) return <LoadingFullScreen />;
+    // if (loading) return <LoadingFullScreen />;
     return (
         <>
-            <div className="container mx-auto flex max-w-screen-lg flex-col gap-y-10 px-6 pt-6 2xl:px-0">
-                <SectionTemplate
-                    title="Profile / Playlists"
-                    distenation="/playlists"
-                >
-                    <Playlists playLists={playlistData} />
-                </SectionTemplate>
-
-                <div className="">
-                    <button
-                        className="hover:bg-highlightbg-blue-500 mx-auto inline-block  rounded bg-highlight-press py-2 px-4 font-bold text-white hover:bg-blue-700"
-                        onClick={() => loadMore()}
-                    >
-                        Load More
-                    </button>
-                </div>
-            </div>
+            <div className="container mx-auto flex max-w-screen-lg flex-col gap-y-10 px-6 pt-6 2xl:px-0"></div>
         </>
     );
 };
