@@ -1,7 +1,10 @@
 import type { GetStaticPropsContext } from "next";
+import Head from "next/head";
+import CardsList from "../../components/cards";
 import Playlists from "../../components/Playlists";
 import ProfileHeader from "../../components/ProfileHeader";
 import SectionTemplate from "../../components/SectionTemplate";
+import Table, { BodyType } from "../../components/Table";
 import TopArtists from "../../components/TopArtists";
 import TopTracks from "../../components/TopTracks";
 
@@ -24,20 +27,95 @@ type Props = {
 const UserProfile = (props: Props) => {
     const { profile, topArtists, playlists, topTracks } = props;
 
+    const heading = [
+        {
+            text: "#",
+            hiddenSM: false,
+        },
+        {
+            text: "Image",
+            hiddenSM: false,
+        },
+        {
+            text: "Name",
+            hiddenSM: false,
+        },
+        {
+            text: "Artist(s)",
+            hiddenSM: true,
+        },
+        {
+            text: "Duration",
+            hiddenSM: false,
+        },
+        {
+            text: "link",
+            hiddenSM: false,
+        },
+    ];
+
+    const body = topTracks?.items.slice(0, 8).map((track, index) => {
+        return [
+            {
+                type: BodyType.TEXT as BodyType.TEXT,
+                data: `${index + 1}`,
+                hiddenSM: false,
+            },
+            {
+                type: BodyType.IMAGE as BodyType.IMAGE,
+                data: track.album?.images[0]?.url || "",
+                alt: track.name,
+                hiddenSM: false,
+            },
+            {
+                type: BodyType.TEXT as BodyType.TEXT,
+                data: track.name,
+                hiddenSM: false,
+            },
+            {
+                type: BodyType.ARRAY as BodyType.ARRAY,
+                data: track.artists.map((artist) => {
+                    return {
+                        name: artist.name,
+                    };
+                }),
+                hiddenSM: true,
+            },
+            {
+                type: BodyType.NUMBER as BodyType.NUMBER,
+                data: track.duration_ms,
+                hiddenSM: false,
+            },
+            {
+                type: BodyType.LINK as BodyType.LINK,
+                data: track.external_urls.spotify,
+                hiddenSM: false,
+            },
+        ];
+    });
+
     return (
         <>
+            <Head>
+                <title>
+                    {`${profile.display_name[0]?.toUpperCase()}${profile.display_name.slice(
+                        1
+                    )}`}{" "}
+                    Profile
+                </title>
+            </Head>
             <ProfileHeader profile={profile} />
             <div className="container mx-auto flex max-w-screen-lg flex-col gap-y-10 px-6 pt-6 2xl:px-0">
                 <SectionTemplate title="Top Artists" distenation="/top_artists">
-                    <TopArtists artists={topArtists} show={8} />
+                    <CardsList data={topArtists} showLength={8} />
                 </SectionTemplate>
 
                 <SectionTemplate title="Top Tracks" distenation="/top_tracks">
-                    <TopTracks tracks={topTracks} show={8} />
+                    <Table heading={heading} body={body} />
                 </SectionTemplate>
 
-                <SectionTemplate title="Playlists" distenation="/playlists">
-                    <Playlists playLists={playlists} show={8} />
+                <SectionTemplate title="Top Artists" distenation="/top_artists">
+                    <CardsList data={playlists} showLength={8} />
                 </SectionTemplate>
             </div>
         </>

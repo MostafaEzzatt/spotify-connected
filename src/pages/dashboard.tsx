@@ -41,4 +41,4 @@ export default withAuth(Dashboard);
 // [x] Disable Create Profile Until Complete Finish Create App Context
 // [x] Create App Context With React Context API
 // [x] Add User Data To The Context
-// [ ] Create Indepenedt Component For Create User Profile
+// [X] Create Component For Add/Update User Profile TO DB
