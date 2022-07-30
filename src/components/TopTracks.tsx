@@ -9,10 +9,11 @@ import SectionTemplate from "./SectionTemplate";
 import Table, { BodyType } from "./Table";
 
 const TopTracks = () => {
-    const { data, isLoading, isError, status } = useQuery<topTracksResponse>(
-        ["topTracks"],
-        () => getRequests(paths.topTracksShort)
-    );
+    const { data, isLoading, isError, status, ...other } =
+        useQuery<topTracksResponse>(["topTracks"], () =>
+            getRequests(paths.topTracksShort)
+        );
+    console.log({ data, isLoading, isError, other, type: "Top tracks" });
 
     const { setTopTracks } = useAppContext();
 
@@ -31,7 +32,7 @@ const TopTracks = () => {
             </div>
         );
 
-    if (status !== "success") return <Loading />;
+    if (status !== "success" || !Array.isArray(data.items)) return <Loading />;
 
     const heading = [
         {

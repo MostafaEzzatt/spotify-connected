@@ -15,8 +15,6 @@ const TopArtists = () => {
 
     const { setTopArtists } = useAppContext();
 
-    console.log({ data, isLoading, isError, other, type: "Top Artists" });
-
     useEffect(() => {
         if (data) {
             setTopArtists(data);
