@@ -15,6 +15,7 @@ const TopTracks = () => {
         );
     console.log({ data, isLoading, isError, other, type: "Top tracks" });
 
+
     const { setTopTracks } = useAppContext();
 
     useEffect(() => {
