@@ -56,6 +56,13 @@ interface props {
 }
 
 const Table = ({ heading, body }: props) => {
+    if (body.length == 0)
+        return (
+            <div className="w-full rounded bg-listBlock py-4 px-2 text-center font-medium text-gray-200 shadow-md">
+                No Data Right Now
+            </div>
+        );
+
     return (
         <table className="w-full text-left text-gray-200">
             <thead>

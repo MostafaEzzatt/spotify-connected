@@ -1,9 +1,3 @@
-import React from "react";
-
-// utils
-
-// spotify
-
 // Components
 import Playlists from "../components/Playlists";
 import TopArtists from "../components/TopArtists";
@@ -13,9 +7,8 @@ import TopTracks from "../components/TopTracks";
 import { profileResponse } from "../types/spotifyAPIProfileResponse";
 
 // Route Protection
-import withAuth from "../components/protected/withAuth";
-import TopPageMessage from "../components/TopPageMessage";
 import CreateUserProfile from "../components/CreateUserProfile";
+import withAuth from "../components/protected/withAuth";
 
 // TEST
 
