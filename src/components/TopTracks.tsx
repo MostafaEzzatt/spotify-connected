@@ -13,7 +13,6 @@ const TopTracks = () => {
         useQuery<topTracksResponse>(["topTracks"], () =>
             getRequests(paths.topTracksShort)
         );
-    console.log({ data, isLoading, isError, other, type: "Top tracks" });
 
 
     const { setTopTracks } = useAppContext();
