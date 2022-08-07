@@ -97,6 +97,10 @@ const CreateUserProfile = () => {
                     setProfileLink(
                         `${window.location.origin}/profile/${userDB.spotifyId}`
                     );
+
+                    await fetch(
+                        `${process.env.NEXT_PUBLIC_URL_ORIGIN}/api/revalidate_profile?id=${userDB.spotifyId}`
+                    );
                 } else {
                     handleProfileAlreadyUpdated();
                 }

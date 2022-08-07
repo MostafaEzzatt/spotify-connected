@@ -14,7 +14,7 @@ export default async function handler(
     res: NextApiResponse<Data>
 ) {
     const { id } = req.query;
-    console.log(id);
+
     if (!id) {
         return res.status(400).json({
             state: false,
@@ -22,7 +22,7 @@ export default async function handler(
     }
 
     try {
-        await res.revalidate(`profile/${req.query.id}`);
+        await res.revalidate(`/profile/${req.query.id}`);
         return res.json({ state: true });
     } catch (e) {
         return res.json({ state: false });
