@@ -89,28 +89,28 @@ const CreateUserProfile = () => {
                     );
                 }
             } else {
-                if (isTwentyFourHoursPass(userDB)) {
-                    await updateUser({ ...userData, id: userDB.id });
+                // if (isTwentyFourHoursPass(userDB)) {
+                await updateUser({ ...userData, id: userDB.id });
 
-                    await updateUserProfile({
-                        ...profileData,
-                        userId: userDB.id,
-                    });
+                await updateUserProfile({
+                    ...profileData,
+                    userId: userDB.id,
+                });
 
-                    toast.success("Profile updated", {
-                        toastId: "profileUpdated",
-                    });
+                toast.success("Profile updated", {
+                    toastId: "profileUpdated",
+                });
 
-                    setProfileUpdated(true);
+                setProfileUpdated(true);
 
-                    setProfileLink(
-                        `${window.location.origin}/profile/${userDB.spotifyId}`
-                    );
+                setProfileLink(
+                    `${window.location.origin}/profile/${userDB.spotifyId}`
+                );
 
-                    await revalidateUserProfile({ id: userDB.spotifyId });
-                } else {
-                    handleProfileAlreadyUpdated();
-                }
+                await revalidateUserProfile({ id: userDB.spotifyId });
+                // } else {
+                //     handleProfileAlreadyUpdated();
+                // }
             }
         } catch (error: any) {
             toast.error(`Something went wrong`, {
