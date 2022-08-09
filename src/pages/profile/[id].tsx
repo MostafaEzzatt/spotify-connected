@@ -97,12 +97,9 @@ const UserProfile = (props: Props) => {
     return (
         <>
             <Head>
-                <title>
-                    {`${profile.display_name[0]?.toUpperCase()}${profile.display_name.slice(
-                        1
-                    )}`}{" "}
-                    Profile
-                </title>
+                <title>{`${profile.display_name[0]?.toUpperCase()}${profile.display_name.slice(
+                    1
+                )} Profile`}</title>
             </Head>
             <ProfileHeader profile={profile} />
             <div className="container mx-auto flex max-w-screen-lg flex-col gap-y-10 px-6 pt-6 2xl:px-0">

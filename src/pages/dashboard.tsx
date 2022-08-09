@@ -10,8 +10,6 @@ import { profileResponse } from "../types/spotifyAPIProfileResponse";
 import CreateUserProfile from "../components/CreateUserProfile";
 import withAuth from "../components/protected/withAuth";
 
-// TEST
-
 const Dashboard = ({ profile }: { profile: profileResponse }) => {
     return (
         <>

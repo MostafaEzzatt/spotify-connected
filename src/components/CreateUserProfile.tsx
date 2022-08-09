@@ -86,14 +86,18 @@ const CreateUserProfile = () => {
             } else {
                 if (isTwentyFourHoursPass(userDB)) {
                     await updateUser({ ...userData, id: userDB.id });
+
                     await updateUserProfile({
                         ...profileData,
                         userId: userDB.id,
                     });
+
                     toast.success("Profile updated", {
                         toastId: "profileUpdated",
                     });
+
                     setProfileUpdated(true);
+
                     setProfileLink(
                         `${window.location.origin}/profile/${userDB.spotifyId}`
                     );
