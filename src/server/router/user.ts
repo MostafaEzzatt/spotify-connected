@@ -82,10 +82,7 @@ export const userRoute = createRouter()
         }),
         async resolve({ ctx, input }) {
             if (!input.id) return;
-            console.log(`profile id: ${input.id}`, process.env.SECRET_KEY);
-            console.log(
-                `${process.env.URL_ORIGIN}/api/revalidate_profile?id=${input.id}&key=${process.env.SECRET_KEY}`
-            );
+
             await fetch(
                 `${process.env.URL_ORIGIN}/api/revalidate_profile?id=${input.id}&key=${process.env.SECRET_KEY}`
             );
