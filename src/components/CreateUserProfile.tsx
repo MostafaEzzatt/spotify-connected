@@ -23,6 +23,11 @@ const CreateUserProfile = () => {
         trpc.useMutation("profile.update");
     const { mutateAsync: updateUser } = trpc.useMutation("user.update");
 
+    // revalidate user Profile
+    const { mutateAsync: revalidateUserProfile } = trpc.useMutation(
+        "user.revalidateProfile"
+    );
+
     const handleProfileAlreadyUpdated = () => {
         toast.info("Profile updated less than 24 hours ago", {
             toastId: "profileUpdatedLessThan24Hours",
@@ -102,9 +107,7 @@ const CreateUserProfile = () => {
                         `${window.location.origin}/profile/${userDB.spotifyId}`
                     );
 
-                    await fetch(
-                        `${process.env.NEXT_PUBLIC_URL_ORIGIN}/api/revalidate_profile?id=${userDB.spotifyId}`
-                    );
+                    await revalidateUserProfile({ id: userDB.spotifyId });
                 } else {
                     handleProfileAlreadyUpdated();
                 }
