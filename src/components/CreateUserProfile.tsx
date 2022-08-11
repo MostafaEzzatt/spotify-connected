@@ -23,6 +23,11 @@ const CreateUserProfile = () => {
         trpc.useMutation("profile.update");
     const { mutateAsync: updateUser } = trpc.useMutation("user.update");
 
+    // revalidate user Profile
+    const { mutateAsync: revalidateUserProfile } = trpc.useMutation(
+        "user.revalidateProfile"
+    );
+
     const handleProfileAlreadyUpdated = () => {
         toast.info("Profile updated less than 24 hours ago", {
             toastId: "profileUpdatedLessThan24Hours",
@@ -43,6 +48,7 @@ const CreateUserProfile = () => {
         }
 
         toast.info("Working on it...", { toastId: "workingOnIt" });
+        setProfileUpdated(true);
 
         if (profileUpdated) {
             handleProfileAlreadyUpdated();
@@ -78,7 +84,6 @@ const CreateUserProfile = () => {
                     toast.success("Profile created", {
                         toastId: "profileCreated",
                     });
-                    setProfileUpdated(true);
                     setProfileLink(
                         `${window.location.origin}/profile/${addUser.spotifyId}`
                     );
@@ -86,17 +91,21 @@ const CreateUserProfile = () => {
             } else {
                 if (isTwentyFourHoursPass(userDB)) {
                     await updateUser({ ...userData, id: userDB.id });
+
                     await updateUserProfile({
                         ...profileData,
                         userId: userDB.id,
                     });
+
                     toast.success("Profile updated", {
                         toastId: "profileUpdated",
                     });
-                    setProfileUpdated(true);
+
                     setProfileLink(
                         `${window.location.origin}/profile/${userDB.spotifyId}`
                     );
+
+                    await revalidateUserProfile({ id: userDB.spotifyId });
                 } else {
                     handleProfileAlreadyUpdated();
                 }

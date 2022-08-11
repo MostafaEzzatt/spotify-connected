@@ -1,6 +1,6 @@
-import { createRouter } from "./context";
-import { z } from "zod";
 import { Prisma } from "@prisma/client";
+import { z } from "zod";
+import { createRouter } from "./context";
 
 const defaultUserSelect = Prisma.validator<Prisma.UserSelect>()({
     id: true,
@@ -74,5 +74,17 @@ export const userRoute = createRouter()
                 },
                 select: defaultUserSelect,
             });
+        },
+    })
+    .mutation("revalidateProfile", {
+        input: z.object({
+            id: z.string(),
+        }),
+        async resolve({ ctx, input }) {
+            if (!input.id) return;
+
+            await fetch(
+                `${process.env.URL_ORIGIN}/api/revalidate_profile?id=${input.id}&key=${process.env.SECRET_KEY}`
+            );
         },
     });
