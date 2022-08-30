@@ -8,9 +8,8 @@ import Loading from "./Loading";
 import SectionTemplate from "./SectionTemplate";
 
 const TopArtists = () => {
-    const { data, isLoading, isError, status, ...other } = useQuery(
-        ["topArtists"],
-        () => getRequests(paths.topArtistsShort)
+    const { data, isError, status } = useQuery(["topArtists"], () =>
+        getRequests(paths.topArtistsShort)
     );
 
     const { setTopArtists } = useAppContext();
@@ -20,8 +19,6 @@ const TopArtists = () => {
             setTopArtists(data);
         }
     }, [data, setTopArtists]);
-
-    if (isLoading) return <Loading />;
 
     if (isError)
         return (
