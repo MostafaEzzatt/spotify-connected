@@ -24,7 +24,7 @@ const Layout = ({ children }: props) => {
 
     if (dontDisplayLayout.includes(pathname)) return <>{children}</>;
 
-    if (isLoading) return <LoadingFullScreen />;
+    if (isLoading) return <></>;
     if (isError) return <h1> Sorry something went wrong</h1>;
     return (
         <>

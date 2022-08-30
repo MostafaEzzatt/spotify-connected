@@ -5,9 +5,18 @@ import Layout from "../components/layout";
 import type { AppRouter } from "../server/router";
 import "../styles/globals.css";
 
+import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AppContextProvider from "../context";
+
+const ReactQueryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            suspense: true,
+        },
+    },
+});
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
@@ -19,7 +28,9 @@ function MyApp({ Component, pageProps }: AppProps) {
                     pauseOnHover={false}
                     theme="colored"
                 />
-                <Component {...pageProps} />
+                <QueryClientProvider client={ReactQueryClient}>
+                    <Component {...pageProps} />
+                </QueryClientProvider>
             </Layout>
         </AppContextProvider>
     );
@@ -52,6 +63,7 @@ export default withTRPC<AppRouter>({
             // queryClientConfig: { defaultOptions: { queries: { staleTime: 60 } } },
         };
     },
+
     /**
      * @link https://trpc.io/docs/ssr
      */

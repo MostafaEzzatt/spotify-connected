@@ -8,7 +8,7 @@ import Loading from "./Loading";
 import SectionTemplate from "./SectionTemplate";
 
 const Playlists = () => {
-    const { data, isLoading, isError, status } = useQuery(["playlists"], () =>
+    const { data, isError, status } = useQuery(["playlists"], () =>
         getRequests(paths.playlists)
     );
 
@@ -19,8 +19,6 @@ const Playlists = () => {
             setPlayLists(data);
         }
     }, [data, setPlayLists]);
-
-    if (isLoading) return <Loading />;
 
     if (isError)
         return (

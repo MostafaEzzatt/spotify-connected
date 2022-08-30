@@ -7,29 +7,26 @@ import TopTracks from "../components/TopTracks";
 import { profileResponse } from "../types/spotifyAPIProfileResponse";
 
 // Route Protection
+import { Suspense } from "react";
 import CreateUserProfile from "../components/CreateUserProfile";
+import LoadingFullScreen from "../components/LoadingFullScreen";
 import withAuth from "../components/protected/withAuth";
 
-const Dashboard = ({ profile }: { profile: profileResponse }) => {
+const Dashboard = () => {
     return (
         <>
-            <div className="container mx-auto flex max-w-screen-lg flex-col gap-y-10 px-6 pt-6 pb-14 2xl:px-0">
-                <TopArtists />
+            <Suspense fallback={<LoadingFullScreen />}>
+                <div className="container mx-auto flex max-w-screen-lg flex-col gap-y-10 px-6 pt-6 pb-14 2xl:px-0">
+                    <TopArtists />
 
-                <TopTracks />
+                    <TopTracks />
 
-                <Playlists />
-            </div>
-            <CreateUserProfile />
+                    <Playlists />
+                </div>
+                <CreateUserProfile />
+            </Suspense>
         </>
     );
 };
 
 export default withAuth(Dashboard);
-
-// TODO:
-// [x] Remove All Requests From Dashboard
-// [x] Disable Create Profile Until Complete Finish Create App Context
-// [x] Create App Context With React Context API
-// [x] Add User Data To The Context
-// [X] Create Component For Add/Update User Profile TO DB
