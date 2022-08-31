@@ -1,64 +1,66 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
+import CardsList from "../../components/cards";
 import LoadingFullScreen from "../../components/LoadingFullScreen";
-import Playlists from "../../components/Playlists";
+import PrimaryButton from "../../components/PrimaryButton";
 import withAuth from "../../components/protected/withAuth";
 import SectionTemplate from "../../components/SectionTemplate";
 import getRequests from "../../spotify/getRequest";
 import paths from "../../spotify/requestPaths";
 import playListResponse from "../../types/playListResponse";
 import catchErrors from "../../utils/catchError";
-import getUrlParam from "../../utils/getUrlParam";
 
 const Playlist = () => {
-    // const [playlistData, setPlaylistData] =
-    //     React.useState<playListResponse | null>(null);
+    const [playlistData, setPlaylistData] = useState<playListResponse | null>(
+        null
+    );
+    const [next, setNext] = useState<string | null>(null);
+    const [forceLoad, setForceLoad] = useState<boolean>(false);
 
-    // const [next, setNext] = React.useState<string | null>(null);
-    // const [loading, setLoading] = React.useState(true);
+    const getPlayLists = async (path: string = "") => {
+        const request: playListResponse = await getRequests(
+            path ? path : paths.playlists
+        );
 
-    // useEffect(() => {
-    //     const getList = async () => {
-    //         const playlistsData = await getRequests(paths.playlists);
+        if (!playlistData) {
+            setPlaylistData(request);
+        } else {
+            const newPlayLists = { ...playlistData };
+            newPlayLists.items = [...newPlayLists.items, ...request.items];
+            newPlayLists.href = request.href;
+            setPlaylistData(newPlayLists);
+        }
 
-    //         setPlaylistData(playlistsData);
-    //         setNext(playlistsData.next);
-    //         setLoading(false);
-    //     };
-    //     catchErrors(getList)();
-    // }, []);
+        const nextIsNull = request.next
+            ? `/${request.next?.split("/v1/")[1]}`
+            : null;
 
-    // const loadMore = async () => {
-    //     if (!next) return;
+        setNext(nextIsNull);
+    };
 
-    //     const offset = getUrlParam(next, "offset");
-    //     const nextRequest = await getRequests(
-    //         `${paths.playlists}?&offset=${offset}`
-    //     );
+    useEffect(() => {
+        catchErrors(getPlayLists)();
+    }, []);
 
-    //     if (nextRequest.error) return;
+    if (!playlistData) return <LoadingFullScreen />;
 
-    //     setNext(nextRequest.next);
-
-    //     if (typeof playlistData !== undefined && typeof playlistData !== null) {
-    //         setPlaylistData((old) => {
-    //             let newData = {};
-    //             if (old !== null) {
-    //                 newData = {
-    //                     ...old,
-    //                     items: [...old.items, ...nextRequest.items],
-    //                 };
-    //                 return newData;
-    //             }
-
-    //             return nextRequest;
-    //         });
-    //     }
-    // };
-
-    // if (loading) return <LoadingFullScreen />;
     return (
         <>
-            <div className="container mx-auto flex max-w-screen-lg flex-col gap-y-10 px-6 pt-6 2xl:px-0"></div>
+            <div className="container mx-auto flex max-w-screen-lg flex-col gap-y-10 px-6 pt-6 pb-14 2xl:px-0">
+                <SectionTemplate title="Playlists" distenation="/top_artists">
+                    <CardsList data={playlistData} showLength={0} />
+                </SectionTemplate>
+
+                {playlistData.items.length !== playlistData.total && (
+                    <PrimaryButton
+                        text="Load More"
+                        disabled={next ? false : true}
+                        clickEven={() => {
+                            if (!next) return;
+                            getPlayLists(next);
+                        }}
+                    />
+                )}
+            </div>
         </>
     );
 };

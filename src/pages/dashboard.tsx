@@ -4,7 +4,6 @@ import TopArtists from "../components/TopArtists";
 import TopTracks from "../components/TopTracks";
 
 // types
-import { profileResponse } from "../types/spotifyAPIProfileResponse";
 
 // Route Protection
 import { Suspense } from "react";
