@@ -14,7 +14,6 @@ const Playlist = () => {
         null
     );
     const [next, setNext] = useState<string | null>(null);
-    const [forceLoad, setForceLoad] = useState<boolean>(false);
 
     const getPlayLists = async (path: string = "") => {
         const request: playListResponse = await getRequests(
