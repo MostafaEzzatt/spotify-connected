@@ -1,10 +1,9 @@
 import type {
-    resonse,
-    images,
-    owner,
-    followers,
     external_urls,
+    followers,
     genres,
+    images,
+    resonse,
 } from "./spotifyAPIResponse";
 
 export default interface artistsResponse extends resonse {

@@ -1,19 +1,24 @@
 import { GetServerSideProps } from "next";
-import { useRouter } from "next/router";
-import React from "react";
-import { useInfiniteQuery } from "react-query";
+import { useInfiniteQuery, useQueries, useQuery } from "react-query";
+import LoadingFullScreen from "../../components/LoadingFullScreen";
+import ProfileHeader from "../../components/ProfileHeader";
 import withAuth from "../../components/protected/withAuth";
 import getRequests from "../../spotify/getRequest";
 import paths from "../../spotify/requestPaths";
 
+// types
+import type { item } from "../../types/spotifyArtistsResponse";
+
 const Artist = ({ id }: { id: string }) => {
-    const { data } = useInfiniteQuery(["artist"], () => {
+    const { data, isLoading } = useQuery(["artist"], () => {
         return getRequests(paths.sinalArtist(id));
     });
 
+    if (isLoading) return <LoadingFullScreen />;
+
     console.log(data);
 
-    return <div>Artist</div>;
+    return <></>;
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
