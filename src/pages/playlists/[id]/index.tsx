@@ -33,7 +33,7 @@ const List = () => {
         if (!playlist && "type" in listData) {
             setPlaylist(listData);
             setNextPage(
-                listData.traks.next
+                listData.tracks.next
                     ? `/${listData.tracks.next?.split("/v1/")[1]}`
                     : null
             );
