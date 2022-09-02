@@ -2,10 +2,11 @@ import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import React from "react";
 import { useInfiniteQuery } from "react-query";
+import withAuth from "../../components/protected/withAuth";
 import getRequests from "../../spotify/getRequest";
 import paths from "../../spotify/requestPaths";
 
-const Artist = ({ id }) => {
+const Artist = ({ id }: { id: string }) => {
     const { data } = useInfiniteQuery(["artist"], () => {
         return getRequests(paths.sinalArtist(id));
     });
@@ -25,4 +26,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
 };
 
-export default Artist;
+export default withAuth(Artist);
