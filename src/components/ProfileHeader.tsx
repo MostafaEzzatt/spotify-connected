@@ -40,8 +40,8 @@ const ProfileHeader = (props: Props) => {
 
                     <h1 className="break-words text-7xl font-black text-white sm:text-8xl">
                         {profile.type == "user"
-                            ? profile.display_name
-                            : profile.name}
+                            ? profile.display_name || "No Name"
+                            : profile.name || "No Name"}
                     </h1>
 
                     {profile.type === "playlist" && (

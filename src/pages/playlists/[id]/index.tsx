@@ -8,9 +8,7 @@ import SectionTemplate from "../../../components/SectionTemplate";
 import Table, { BodyType } from "../../../components/Table";
 import getRequests from "../../../spotify/getRequest";
 import paths from "../../../spotify/requestPaths";
-import spotifySinglePlaylistResponse, {
-    playListTracks,
-} from "../../../types/spotifySinglePlaylistResponse";
+import spotifySinglePlaylistResponse from "../../../types/spotifySinglePlaylistResponse";
 import catchErrors from "../../../utils/catchError";
 
 const List = () => {
