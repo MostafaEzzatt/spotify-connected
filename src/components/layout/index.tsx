@@ -18,9 +18,10 @@ const Layout = ({ children }: props) => {
         isLoading,
         isError,
     } = useQuery(["profile"], () => getRequests(paths.profile));
+
     const { pathname } = useRouter();
-    const dontShowProfileInPath = ["/playlists/[id]", "/artist/[id]"];
-    const dontDisplayLayout = ["/profile/[id]"];
+    const dontShowProfileInPath = ["/", "/playlists/[id]", "/artist/[id]"];
+    const dontDisplayLayout = ["/", "/profile/[id]"];
 
     if (dontDisplayLayout.includes(pathname)) return <>{children}</>;
 

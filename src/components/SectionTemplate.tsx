@@ -11,7 +11,7 @@ type Props = {
 const SectionTemplate = (props: Props) => {
     const { title, children, distenation, seeMore } = props;
     return (
-        <section>
+        <section className="w-full">
             <SectionHeading
                 txt={title}
                 distenation={distenation}
