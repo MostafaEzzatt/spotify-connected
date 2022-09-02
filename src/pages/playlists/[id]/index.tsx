@@ -1,15 +1,16 @@
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import CustomeImage from "../../../components/CustomeImage";
 import LoadingFullScreen from "../../../components/LoadingFullScreen";
-import ProfileHeader from "../../../components/ProfileHeader";
+import PrimaryButton from "../../../components/PrimaryButton";
+import withAuth from "../../../components/protected/withAuth";
 import SectionTemplate from "../../../components/SectionTemplate";
+import Table, { BodyType } from "../../../components/Table";
 import getRequests from "../../../spotify/getRequest";
 import paths from "../../../spotify/requestPaths";
-import spotifySinglePlaylistResponse from "../../../types/spotifySinglePlaylistResponse";
+import spotifySinglePlaylistResponse, {
+    playListTracks,
+} from "../../../types/spotifySinglePlaylistResponse";
 import catchErrors from "../../../utils/catchError";
-import convertSecondsToTime from "../../../utils/convertSecondsToTime";
 
 const List = () => {
     const { id } = useRouter().query;
@@ -18,15 +19,48 @@ const List = () => {
 
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const getList = async () => {
-            if (!id || typeof id !== "string") return;
+    const [nextPage, setNextPage] = useState<string | null>(null);
+    const [disabled, setDisabled] = useState<boolean>(false);
 
-            const listData = await getRequests(paths.playlist(id));
+    const getList = async (path: string = "") => {
+        if (!id || typeof id !== "string") return;
+
+        // const listData: spotifySinglePlaylistResponse | playListTracks =
+        const listData: any = await getRequests(
+            path ? path : paths.playlist(id)
+        );
+
+        if (!playlist && "type" in listData) {
             setPlaylist(listData);
+            setNextPage(
+                listData.traks.next
+                    ? `/${listData.tracks.next?.split("/v1/")[1]}`
+                    : null
+            );
+        } else {
+            if ("type" in listData) return;
 
-            setLoading(false);
-        };
+            const deepCopyList = {
+                ...playlist,
+            } as spotifySinglePlaylistResponse;
+            deepCopyList.tracks.items = [
+                ...deepCopyList.tracks.items,
+                ...listData.items,
+            ];
+
+            setPlaylist(deepCopyList);
+            setNextPage(
+                listData.next ? `/${listData.next.split("/v1/")[1]}` : null
+            );
+        }
+
+        if (nextPage) {
+            setDisabled(false);
+        }
+        setLoading(false);
+    };
+
+    useEffect(() => {
         catchErrors(getList)();
     }, [id]);
 
@@ -34,88 +68,96 @@ const List = () => {
 
     if (!playlist) return <></>;
 
+    const heading = [
+        {
+            text: "#",
+            hiddenSM: false,
+        },
+        {
+            text: "Image",
+            hiddenSM: false,
+        },
+        {
+            text: "Name",
+            hiddenSM: false,
+        },
+        {
+            text: "Artist(s)",
+            hiddenSM: true,
+        },
+        {
+            text: "Duration",
+            hiddenSM: false,
+        },
+        {
+            text: "link",
+            hiddenSM: false,
+        },
+    ];
+
+    const body = playlist?.tracks.items.map((item, index) => {
+        return [
+            {
+                type: BodyType.TEXT as BodyType.TEXT,
+                data: `${index + 1}`,
+                hiddenSM: false,
+            },
+            {
+                type: BodyType.IMAGE as BodyType.IMAGE,
+                data: item.track.album?.images[0]?.url || "",
+                alt: item.track.name,
+                hiddenSM: false,
+            },
+            {
+                type: BodyType.TEXT as BodyType.TEXT,
+                data: item.track.name,
+                hiddenSM: false,
+            },
+            {
+                type: BodyType.ARRAY as BodyType.ARRAY,
+                data: item.track.artists.map((artist) => {
+                    return {
+                        name: artist.name,
+                    };
+                }),
+                hiddenSM: true,
+            },
+            {
+                type: BodyType.NUMBER as BodyType.NUMBER,
+                data: item.track.duration_ms,
+                hiddenSM: false,
+            },
+            {
+                type: BodyType.LINK as BodyType.LINK,
+                data: item.track.external_urls.spotify,
+                hiddenSM: false,
+            },
+        ];
+    });
+
     return (
         <>
-            <ProfileHeader profile={playlist} />
-
-            <div className="container mx-auto flex max-w-screen-lg flex-col gap-y-10 px-6 pt-6 2xl:px-0">
-                <SectionTemplate title="profile / tracks" distenation="">
-                    <table className="w-full text-left text-gray-200">
-                        <thead>
-                            <tr>
-                                <th className="border-b border-slate-700 pb-4 pl-4">
-                                    #
-                                </th>
-                                <th className="border-b border-slate-700 pb-4">
-                                    Image
-                                </th>
-                                <th className="border-b border-slate-700 pb-4">
-                                    Name
-                                </th>
-                                <th className="hidden border-b border-slate-700 pb-4 md:table-cell">
-                                    Artist(s)
-                                </th>
-                                <th className="border-b border-slate-700 pb-4 pr-4">
-                                    Duration
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {playlist.tracks.items.map((item, index) => {
-                                return (
-                                    <tr
-                                        key={item.track.id}
-                                        className="transition-colors hover:bg-white/5 hover:text-white"
-                                    >
-                                        <td className="border-b border-slate-700/30 px-2 pt-2 pl-4">
-                                            {index + 1}
-                                        </td>
-                                        <td className="border-b border-slate-700/30 px-2 pt-2">
-                                            {item.track.album.images.length >
-                                                0 && (
-                                                <CustomeImage
-                                                    image={
-                                                        item.track.album
-                                                            .images[0]?.url
-                                                    }
-                                                    alt={item.track.album.name}
-                                                    width={50}
-                                                    height={50}
-                                                    type="track"
-                                                />
-                                            )}
-                                        </td>
-                                        <td className="border-b border-slate-700/30 px-2 pt-2">
-                                            {item.track.name}
-                                        </td>
-                                        <td className="hidden border-b border-slate-700/30 px-2 pt-2 md:table-cell">
-                                            <div className="flex gap-1">
-                                                {item.track.artists.map(
-                                                    (artist) => (
-                                                        <span
-                                                            key={artist.id}
-                                                            className="rounded bg-white/10 px-3 py-1"
-                                                        >
-                                                            {artist.name}
-                                                        </span>
-                                                    )
-                                                )}
-                                            </div>
-                                        </td>
-                                        <td className="border-b border-slate-700/30 px-2 pt-2 pr-4">
-                                            {convertSecondsToTime(
-                                                item.track.duration_ms
-                                            )}
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
+            <div className="container mx-auto flex max-w-screen-lg flex-col items-center gap-y-10 px-6 pt-6 pb-14 2xl:px-0">
+                <SectionTemplate
+                    title="Playlist Tracks"
+                    distenation="/top_tracks"
+                >
+                    <Table heading={heading} body={body} />
                 </SectionTemplate>
+                {nextPage && (
+                    <PrimaryButton
+                        clickEven={() => {
+                            if (!nextPage) return;
+                            setDisabled(true);
+                            getList(nextPage);
+                        }}
+                        disabled={disabled}
+                        text="Load More"
+                    />
+                )}
             </div>
         </>
     );
 };
 
-export default List;
+export default withAuth(List);

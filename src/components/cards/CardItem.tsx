@@ -6,8 +6,8 @@ import CustomeImage from "../CustomeImage";
 
 const CardItem = ({ item }: { item: playItemType | artistItemType }) => {
     return (
-        <Link href={item.external_urls.spotify}>
-            <a className="mx-auto w-list-item sm:w-full" target="_blank">
+        <Link href={`/playlists/${item.id}`}>
+            <a className="mx-auto w-list-item sm:w-full">
                 <div className="flex h-full w-list-item flex-col items-center justify-end bg-listBlock p-4 drop-shadow transition-shadow hover:drop-shadow-md sm:w-full">
                     <div className="mb-2 w-full">
                         <CustomeImage

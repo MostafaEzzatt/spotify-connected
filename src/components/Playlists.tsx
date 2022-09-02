@@ -30,7 +30,7 @@ const Playlists = () => {
     if (status !== "success") return <Loading />;
 
     return (
-        <SectionTemplate title="Top Artists" distenation="/top_artists">
+        <SectionTemplate title="Playlists" distenation="/top_artists">
             <CardsList data={data} showLength={8} />
         </SectionTemplate>
     );
