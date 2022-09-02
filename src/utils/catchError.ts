@@ -5,6 +5,7 @@ function catchErrors(fn: Function) {
         return fn(...args).catch((error: any) => {
             toast.error(`Something went wrong`);
             console.log("Code", error.code, "Message", error.message, error);
+            console.dir(error);
         });
     };
 }

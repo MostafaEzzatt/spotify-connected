@@ -1,9 +1,9 @@
 import {
-    resonse,
     external_urls,
     followers,
     images,
     owner,
+    resonse,
 } from "./spotifyAPIResponse";
 
 import { item } from "./spotifyTopTacks";
@@ -43,7 +43,7 @@ interface playListOwner extends owner {
     followers: followers;
 }
 
-interface playListTracks {
+export interface playListTracks {
     href: string;
     items: playListTrackItem[];
     limit: number;
