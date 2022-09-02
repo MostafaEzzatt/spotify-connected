@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import LoadingFullScreen from "../../../components/LoadingFullScreen";
 import PrimaryButton from "../../../components/PrimaryButton";
+import ProfileHeader from "../../../components/ProfileHeader";
 import withAuth from "../../../components/protected/withAuth";
 import SectionTemplate from "../../../components/SectionTemplate";
 import Table, { BodyType } from "../../../components/Table";
@@ -137,6 +138,7 @@ const List = () => {
 
     return (
         <>
+            <ProfileHeader profile={playlist} />
             <div className="container mx-auto flex max-w-screen-lg flex-col items-center gap-y-10 px-6 pt-6 pb-14 2xl:px-0">
                 <SectionTemplate
                     title="Playlist Tracks"
