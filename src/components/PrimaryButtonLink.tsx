@@ -6,7 +6,7 @@ const PrimaryButtonLink = (props: { href: string; text: string }) => {
 
     return (
         <Link href={href}>
-            <a className="text-black text-xl font-bold bg-highlight hover:scale-110 px-7 py-2 rounded-full transition-colors">
+            <a className="cursor-pointer rounded-full bg-highlight px-7 py-2 text-xl font-bold text-black transition-colors hover:scale-110">
                 {text}
             </a>
         </Link>
