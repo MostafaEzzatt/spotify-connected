@@ -23,6 +23,7 @@ const Layout = ({ children }: props) => {
     const dontShowProfileInPath = ["/", "/playlists/[id]", "/artist/[id]"];
     const dontDisplayLayout = ["/", "/profile/[id]"];
 
+
     if (dontDisplayLayout.includes(pathname)) return <>{children}</>;
 
     if (isLoading) return <></>;
