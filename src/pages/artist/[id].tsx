@@ -15,7 +15,7 @@ const Artist = ({ id }: { id: string }) => {
     if (isLoading) return <LoadingFullScreen />;
 
     return (
-        <div className="container flex h-screen w-full flex-col items-center justify-center px-9">
+        <div className="container mx-auto flex h-screen w-full flex-col items-center justify-center px-9">
             <div className="min-w-min">
                 <Link href={"/"}>
                     <a className="font-bold text-highlight hover:text-highlight-press">
@@ -39,7 +39,7 @@ const Artist = ({ id }: { id: string }) => {
                     {data.name}
                 </h1>
 
-                <div className="my-3 mx-auto flex max-w-min flex-wrap items-center gap-2 text-center text-sm text-link">
+                <div className="my-3 flex flex-wrap items-center justify-center gap-2 text-sm text-link">
                     GENRES:
                     {data.genres.map((g: string) => {
                         return (
