@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useInfiniteQuery } from "react-query";
 import CardsList from "../../components/cards";
 import LoadingFullScreen from "../../components/LoadingFullScreen";
 import PrimaryButton from "../../components/PrimaryButton";
@@ -6,41 +7,56 @@ import withAuth from "../../components/protected/withAuth";
 import SectionTemplate from "../../components/SectionTemplate";
 import getRequests from "../../spotify/getRequest";
 import paths from "../../spotify/requestPaths";
-import playListResponse from "../../types/playListResponse";
-import catchErrors from "../../utils/catchError";
+import playListResponse, { item } from "../../types/playListResponse";
 
 const Playlist = () => {
     const [playlistData, setPlaylistData] = useState<playListResponse | null>(
         null
     );
-    const [next, setNext] = useState<string | null>(null);
 
-    const getPlayLists = async (path: string = "") => {
-        const request: playListResponse = await getRequests(
-            path ? path : paths.playlists
-        );
-
-        if (!playlistData) {
-            setPlaylistData(request);
-        } else {
-            const newPlayLists = { ...playlistData };
-            newPlayLists.items = [...newPlayLists.items, ...request.items];
-            newPlayLists.href = request.href;
-            setPlaylistData(newPlayLists);
+    const {
+        data: playlists,
+        isLoading,
+        fetchNextPage,
+        isFetching,
+        isFetchingNextPage,
+        hasNextPage,
+    } = useInfiniteQuery(
+        ["loadPlaylists"],
+        (data) => {
+            return getRequests(paths.playlists(data.pageParam));
+        },
+        {
+            getNextPageParam: (lastPage, _allPages) => {
+                if (!lastPage.next) return undefined;
+                return lastPage.next || undefined;
+            },
         }
-
-        const nextIsNull = request.next
-            ? `/${request.next?.split("/v1/")[1]}`
-            : null;
-
-        setNext(nextIsNull);
-    };
+    );
 
     useEffect(() => {
-        catchErrors(getPlayLists)();
-    }, []);
+        if (!isLoading && !isFetching && !isFetchingNextPage) {
+            const pages = playlists?.pages as Array<playListResponse>;
 
-    if (!playlistData) return <LoadingFullScreen />;
+            if (Array.isArray(pages)) {
+                let allItems: item[] = [];
+
+                pages.forEach((page) => {
+                    allItems = allItems.concat(page.items);
+                });
+
+                const result = {
+                    ...pages[pages.length - 1],
+                } as playListResponse;
+                result.items = allItems;
+
+                setPlaylistData(result);
+            }
+        }
+    }, [isFetching, isFetchingNextPage, isLoading, playlists?.pages]);
+
+    if (isLoading) return <LoadingFullScreen />;
+    if (!playlistData) return <></>;
 
     return (
         <>
@@ -52,10 +68,9 @@ const Playlist = () => {
                 {playlistData.items.length !== playlistData.total && (
                     <PrimaryButton
                         text="Load More"
-                        disabled={next ? false : true}
+                        disabled={isFetching || isFetchingNextPage}
                         clickEven={() => {
-                            if (!next) return;
-                            getPlayLists(next);
+                            fetchNextPage();
                         }}
                     />
                 )}
