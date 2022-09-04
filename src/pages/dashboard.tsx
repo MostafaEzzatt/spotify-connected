@@ -22,7 +22,7 @@ const Dashboard = () => {
 
                     <Playlists />
                 </div>
-                <CreateUserProfile />
+                {/* <CreateUserProfile /> */}
             </Suspense>
         </>
     );

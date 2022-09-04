@@ -24,7 +24,7 @@ export default interface spotifySinglePlaylistResponse extends resonse {
     uri: string;
 }
 
-interface playListTrackItem {
+export interface playListTrackItem {
     added_at: string;
     added_by: {
         external_urls: external_urls;

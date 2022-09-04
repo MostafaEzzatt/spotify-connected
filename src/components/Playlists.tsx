@@ -9,7 +9,7 @@ import SectionTemplate from "./SectionTemplate";
 
 const Playlists = () => {
     const { data, isError, status } = useQuery(["playlists"], () =>
-        getRequests(paths.playlists)
+        getRequests(paths.playlists())
     );
 
     const { setPlayLists } = useAppContext();

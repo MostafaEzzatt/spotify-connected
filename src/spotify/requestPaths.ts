@@ -1,7 +1,14 @@
 const paths = {
     profile: "/me",
-    playlists: "/me/playlists",
-    playlist: (id: string) => `/playlists/${id}`,
+    playlists: (id: string = "") => {
+        return id ? `/${id.split("/v1/")[1]}` : "/me/playlists";
+    },
+    playlist: (id: string) => {
+        const spliting = id.split("/v1/");
+        return spliting.length >= 2
+            ? `/${id.split("/v1/")[1]}`
+            : `/playlists/${id}`;
+    },
     sinalArtist: (id: string) => {
         return `/artists/${id}`;
     },
