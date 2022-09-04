@@ -1,6 +1,6 @@
 const paths = {
     profile: "/me",
-    playlists: (id: string) => {
+    playlists: (id: string = "") => {
         return id ? `/${id.split("/v1/")[1]}` : "/me/playlists";
     },
     playlist: (id: string) => {
