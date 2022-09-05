@@ -1,54 +1,7 @@
 import Link from "next/link";
-import React from "react";
-import { boolean } from "zod";
 import CustomeImage from "../components/CustomeImage";
+import { bodyArray, heading } from "../types/table";
 import convertSecondsToTime from "../utils/convertSecondsToTime";
-
-export enum BodyType {
-    IMAGE = "IMAGE",
-    TEXT = "TEXT",
-    ARRAY = "ARRAY",
-    NUMBER = "NUMBER",
-    LINK = "LINK",
-}
-
-type bodyItem =
-    | {
-          type: BodyType.IMAGE;
-          data: string;
-          hiddenSM: boolean;
-          alt: string | undefined;
-      }
-    | {
-          type: BodyType.TEXT;
-          data: string;
-          hiddenSM: boolean;
-          alt?: string | undefined;
-      }
-    | {
-          type: BodyType.LINK;
-          data: string;
-          hiddenSM: boolean;
-      }
-    | {
-          type: BodyType.ARRAY;
-          data: { name: string }[];
-          hiddenSM: boolean;
-          alt?: string | undefined;
-      }
-    | {
-          type: BodyType.NUMBER;
-          data: number;
-          hiddenSM: boolean;
-          alt?: string | undefined;
-      };
-
-export type bodyArray = bodyItem[];
-
-interface heading {
-    text: string;
-    hiddenSM: boolean;
-}
 
 interface props {
     heading: heading[];
@@ -80,10 +33,10 @@ const Table = ({ heading, body }: props) => {
                 </tr>
             </thead>
             <tbody>
-                {body.map((item, idx) => {
+                {body.map((item, rowIdx) => {
                     return (
                         <tr
-                            key={`${item}${idx}`}
+                            key={`${item}${rowIdx}`}
                             className="bg-base transition-colors hover:bg-white/5"
                         >
                             {item.map((item, idx) => {
@@ -97,7 +50,10 @@ const Table = ({ heading, body }: props) => {
                                         }`}
                                     >
                                         <>
-                                            {item.type === "TEXT" && item.data}
+                                            {idx === 0
+                                                ? rowIdx + 1
+                                                : item.type === "TEXT" &&
+                                                  item.data}
 
                                             {item.type === "LINK" && (
                                                 <Link href={item.data}>

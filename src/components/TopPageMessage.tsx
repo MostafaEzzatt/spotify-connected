@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { toast } from "react-toastify";
 
 const TopPageMessage = ({
@@ -6,7 +6,7 @@ const TopPageMessage = ({
     resetMessage,
 }: {
     message: string;
-    resetMessage: React.Dispatch<React.SetStateAction<string>>;
+    resetMessage: Dispatch<SetStateAction<string>>;
 }) => {
     const handleCopy = () => {
         if (!message) return;

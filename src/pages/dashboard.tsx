@@ -7,7 +7,6 @@ import TopTracks from "../components/TopTracks";
 
 // Route Protection
 import { Suspense } from "react";
-import CreateUserProfile from "../components/CreateUserProfile";
 import LoadingFullScreen from "../components/LoadingFullScreen";
 import withAuth from "../components/protected/withAuth";
 

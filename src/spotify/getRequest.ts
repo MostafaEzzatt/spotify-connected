@@ -1,4 +1,4 @@
-import getSpotifyAccessToken, { refreshToken } from "./getAccessToken";
+import { refreshToken } from "./getAccessToken";
 import requestHeaders from "./requestHeaders";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;

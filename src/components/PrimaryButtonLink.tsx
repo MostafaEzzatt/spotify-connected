@@ -1,5 +1,4 @@
 import Link from "next/link";
-import React from "react";
 
 const PrimaryButtonLink = (props: { href: string; text: string }) => {
     const { href, text } = props;
