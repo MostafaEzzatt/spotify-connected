@@ -9,7 +9,7 @@ import Table from "../../../components/Table";
 import getRequests from "../../../spotify/getRequest";
 import paths from "../../../spotify/requestPaths";
 import { bodyArray } from "../../../types/table";
-import prepareTableBody from "../../../utils/prepareTableBody";
+import { default as prepareTablePlaylistBody } from "../../../utils/prepareTableBody";
 
 const List = ({ id }: { id: string }) => {
     const {
@@ -70,8 +70,8 @@ const List = ({ id }: { id: string }) => {
     const body = playlist?.pages
         .map((page) => {
             return page.tracks
-                ? page.tracks.items.map(prepareTableBody)
-                : page.items.map(prepareTableBody);
+                ? page.tracks.items.map(prepareTablePlaylistBody)
+                : page.items.map(prepareTablePlaylistBody);
         })
         .reduce((prev, curr) => [...prev, ...curr]) as bodyArray[];
 
