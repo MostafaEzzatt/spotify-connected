@@ -9,7 +9,7 @@ import Table from "../../../components/Table";
 import getRequests from "../../../spotify/getRequest";
 import paths from "../../../spotify/requestPaths";
 import { bodyArray } from "../../../types/table";
-import { default as prepareTablePlaylistBody } from "../../../utils/prepareTableBody";
+import prepareTablePlaylistBody from "../../../utils/prepareTableBody";
 
 const List = ({ id }: { id: string }) => {
     const {
