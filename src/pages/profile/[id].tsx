@@ -1,12 +1,9 @@
 import type { GetStaticPropsContext } from "next";
 import Head from "next/head";
 import CardsList from "../../components/cards";
-import Playlists from "../../components/Playlists";
 import ProfileHeader from "../../components/ProfileHeader";
 import SectionTemplate from "../../components/SectionTemplate";
-import Table, { BodyType } from "../../components/Table";
-import TopArtists from "../../components/TopArtists";
-import TopTracks from "../../components/TopTracks";
+import Table from "../../components/Table";
 
 // prisma
 import { prisma } from "../../server/db/client";
@@ -16,6 +13,7 @@ import playListResponse from "../../types/playListResponse";
 import { profileResponse } from "../../types/spotifyAPIProfileResponse";
 import artistsResponse from "../../types/spotifyArtistsResponse";
 import topTracksResponse from "../../types/spotifyTopTacks";
+import { prepareTableTopTracksBody } from "../../utils/prepareTableBody";
 
 type Props = {
     profile: profileResponse;
@@ -54,45 +52,7 @@ const UserProfile = (props: Props) => {
         },
     ];
 
-    const body = topTracks?.items.slice(0, 8).map((track, index) => {
-        return [
-            {
-                type: BodyType.TEXT as BodyType.TEXT,
-                data: `${index + 1}`,
-                hiddenSM: false,
-            },
-            {
-                type: BodyType.IMAGE as BodyType.IMAGE,
-                data: track.album?.images[0]?.url || "",
-                alt: track.name,
-                hiddenSM: false,
-            },
-            {
-                type: BodyType.TEXT as BodyType.TEXT,
-                data: track.name,
-                hiddenSM: false,
-            },
-            {
-                type: BodyType.ARRAY as BodyType.ARRAY,
-                data: track.artists.map((artist) => {
-                    return {
-                        name: artist.name,
-                    };
-                }),
-                hiddenSM: true,
-            },
-            {
-                type: BodyType.NUMBER as BodyType.NUMBER,
-                data: track.duration_ms,
-                hiddenSM: false,
-            },
-            {
-                type: BodyType.LINK as BodyType.LINK,
-                data: track.external_urls.spotify,
-                hiddenSM: false,
-            },
-        ];
-    });
+    const body = topTracks?.items.slice(0, 8).map(prepareTableTopTracksBody);
 
     return (
         <>

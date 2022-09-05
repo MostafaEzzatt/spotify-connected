@@ -4,7 +4,6 @@ import React from "react";
 import { useQuery } from "react-query";
 import getRequests from "../../spotify/getRequest";
 import paths from "../../spotify/requestPaths";
-import LoadingFullScreen from "../LoadingFullScreen";
 import Logout from "../Logout";
 import ProfileHeader from "../ProfileHeader";
 
@@ -22,7 +21,6 @@ const Layout = ({ children }: props) => {
     const { pathname } = useRouter();
     const dontShowProfileInPath = ["/", "/playlists/[id]", "/artist/[id]"];
     const dontDisplayLayout = ["/", "/profile/[id]"];
-
 
     if (dontDisplayLayout.includes(pathname)) return <>{children}</>;
 
