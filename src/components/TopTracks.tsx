@@ -4,9 +4,10 @@ import { useAppContext } from "../context";
 import getRequests from "../spotify/getRequest";
 import paths from "../spotify/requestPaths";
 import topTracksResponse from "../types/spotifyTopTacks";
+import { BodyType } from "../types/table";
 import Loading from "./Loading";
 import SectionTemplate from "./SectionTemplate";
-import Table, { BodyType } from "./Table";
+import Table from "./Table";
 
 const TopTracks = () => {
     const { data, isError, status } = useQuery<topTracksResponse>(
