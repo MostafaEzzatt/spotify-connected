@@ -2,6 +2,7 @@ import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useQuery } from "react-query";
 import CustomeImage from "../../components/CustomeImage";
+import HomeLinkBTN from "../../components/HomeLinkBTN";
 import LoadingFullScreen from "../../components/LoadingFullScreen";
 import withAuth from "../../components/protected/withAuth";
 import Home from "../../components/svgs/Home";
@@ -18,11 +19,7 @@ const Artist = ({ id }: { id: string }) => {
     return (
         <div className="container mx-auto flex h-screen w-full flex-col items-center justify-center px-9">
             <div className="min-w-min">
-                <Link href={"/"}>
-                    <a className="inline-block rounded bg-headerBackground p-2 text-base transition-colors hover:bg-highlight">
-                        <Home />
-                    </a>
-                </Link>
+                <HomeLinkBTN />
                 <div className="mx-auto max-w-max px-6 sm:px-0">
                     {data.images.length > 0 && (
                         <CustomeImage
