@@ -5,8 +5,8 @@ import getRequests from "../spotify/getRequest";
 import paths from "../spotify/requestPaths";
 import topTracksResponse from "../types/spotifyTopTacks";
 import { prepareTableTopTracksBody } from "../utils/prepareTableBody";
-import Loading from "./Loading";
 import SectionTemplate from "./SectionTemplate";
+import Loading from "./svgs/Loading";
 import Table from "./Table";
 
 const TopTracks = () => {
