@@ -1,0 +1,14 @@
+import Link from "next/link";
+import Home from "./svgs/Home";
+
+const HomeLinkBTN = () => {
+    return (
+        <Link href="/">
+            <a className="inline-block rounded bg-headerBackground p-2 text-base transition-colors hover:bg-highlight">
+                <Home />
+            </a>
+        </Link>
+    );
+};
+
+export default HomeLinkBTN;
