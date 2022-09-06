@@ -4,8 +4,8 @@ import { useAppContext } from "../context";
 import getRequests from "../spotify/getRequest";
 import paths from "../spotify/requestPaths";
 import CardsList from "./cards";
-import Loading from "./Loading";
 import SectionTemplate from "./SectionTemplate";
+import Loading from "./svgs/Loading";
 
 const Playlists = () => {
     const { data, isError, status } = useQuery(["playlists"], () =>
@@ -30,7 +30,7 @@ const Playlists = () => {
     if (status !== "success") return <Loading />;
 
     return (
-        <SectionTemplate title="Playlists" distenation="/top_artists">
+        <SectionTemplate title="Playlists" distenation="/playlists" seeMore>
             <CardsList data={data} showLength={8} />
         </SectionTemplate>
     );

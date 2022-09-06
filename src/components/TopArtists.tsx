@@ -4,8 +4,8 @@ import { useAppContext } from "../context";
 import getRequests from "../spotify/getRequest";
 import paths from "../spotify/requestPaths";
 import CardsList from "./cards";
-import Loading from "./Loading";
 import SectionTemplate from "./SectionTemplate";
+import Loading from "./svgs/Loading";
 
 const TopArtists = () => {
     const { data, isError, status } = useQuery(["topArtists"], () =>

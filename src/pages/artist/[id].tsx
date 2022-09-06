@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import CustomeImage from "../../components/CustomeImage";
 import LoadingFullScreen from "../../components/LoadingFullScreen";
 import withAuth from "../../components/protected/withAuth";
+import Home from "../../components/svgs/Home";
 import getRequests from "../../spotify/getRequest";
 import paths from "../../spotify/requestPaths";
 
@@ -18,8 +19,8 @@ const Artist = ({ id }: { id: string }) => {
         <div className="container mx-auto flex h-screen w-full flex-col items-center justify-center px-9">
             <div className="min-w-min">
                 <Link href={"/"}>
-                    <a className="font-bold text-highlight hover:text-highlight-press">
-                        {"<-"} Back Home
+                    <a className="inline-block rounded bg-headerBackground p-2 text-base transition-colors hover:bg-highlight">
+                        <Home />
                     </a>
                 </Link>
                 <div className="mx-auto max-w-max px-6 sm:px-0">
