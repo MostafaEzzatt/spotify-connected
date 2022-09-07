@@ -1,13 +1,13 @@
 import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useQuery } from "react-query";
-import CustomeImage from "../../components/CustomeImage";
-import HomeLinkBTN from "../../components/HomeLinkBTN";
-import LoadingFullScreen from "../../components/LoadingFullScreen";
-import withAuth from "../../components/protected/withAuth";
-import Home from "../../components/svgs/Home";
-import getRequests from "../../spotify/getRequest";
-import paths from "../../spotify/requestPaths";
+import CustomeImage from "../../../components/CustomeImage";
+import HomeLinkBTN from "../../../components/HomeLinkBTN";
+import LoadingFullScreen from "../../../components/LoadingFullScreen";
+import withAuth from "../../../components/protected/withAuth";
+import Home from "../../../components/svgs/Home";
+import getRequests from "../../../spotify/getRequest";
+import paths from "../../../spotify/requestPaths";
 
 const Artist = ({ id }: { id: string }) => {
     const { data, isLoading } = useQuery(["artist"], () => {
