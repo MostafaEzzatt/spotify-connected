@@ -4,7 +4,7 @@ import CustomeImage from "../../components/CustomeImage";
 import LoadingFullScreen from "../../components/LoadingFullScreen";
 import withAuth from "../../components/protected/withAuth";
 import SectionTemplate from "../../components/SectionTemplate";
-import Info from "../../components/svgs/info";
+import Info from "../../components/svgs/Info";
 import getRequests from "../../spotify/getRequest";
 import paths from "../../spotify/requestPaths";
 import artistsResponse from "../../types/spotifyArtistsResponse";
