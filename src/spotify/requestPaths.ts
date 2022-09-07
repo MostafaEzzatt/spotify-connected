@@ -13,7 +13,7 @@ const paths = {
         return `/artists/${id}`;
     },
     topArtistsShort: "/me/top/artists?time_range=short_term",
-    topArtistsMedium: "/me/top/artists?time_range=medium_term",
+    topArtistsMedium: "/me/top/artists?time_range=medium_term&limit=50",
     topTracksShort: "/me/top/tracks?time_range=short_term",
     topTracksMedium: "/me/top/tracks?time_range=short_term",
 };
