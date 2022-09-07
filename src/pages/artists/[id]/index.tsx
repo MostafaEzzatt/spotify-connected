@@ -1,13 +1,13 @@
 import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useQuery } from "react-query";
-import CustomeImage from "../../components/CustomeImage";
-import HomeLinkBTN from "../../components/HomeLinkBTN";
-import LoadingFullScreen from "../../components/LoadingFullScreen";
-import withAuth from "../../components/protected/withAuth";
-import Home from "../../components/svgs/Home";
-import getRequests from "../../spotify/getRequest";
-import paths from "../../spotify/requestPaths";
+import CustomeImage from "../../../components/CustomeImage";
+import HomeLinkBTN from "../../../components/HomeLinkBTN";
+import LoadingFullScreen from "../../../components/LoadingFullScreen";
+import withAuth from "../../../components/protected/withAuth";
+import Home from "../../../components/svgs/Home";
+import getRequests from "../../../spotify/getRequest";
+import paths from "../../../spotify/requestPaths";
 
 const Artist = ({ id }: { id: string }) => {
     const { data, isLoading } = useQuery(["artist"], () => {
@@ -19,7 +19,14 @@ const Artist = ({ id }: { id: string }) => {
     return (
         <div className="container mx-auto flex h-screen w-full flex-col items-center justify-center px-9">
             <div className="min-w-min">
-                <HomeLinkBTN />
+                <div className="flex items-center gap-3">
+                    <HomeLinkBTN />
+                    <Link href={"/artists"}>
+                        <a className="inline-block rounded bg-headerBackground/25 p-2 text-sm text-base font-bold transition-colors hover:bg-highlight">
+                            See All Artists
+                        </a>
+                    </Link>
+                </div>
                 <div className="mx-auto max-w-max px-6 sm:px-0">
                     {data.images.length > 0 && (
                         <CustomeImage

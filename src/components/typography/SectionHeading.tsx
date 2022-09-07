@@ -19,7 +19,7 @@ const SectionHeading = (props: Props) => {
                 {!dontShowInPath.includes(pathname) && (
                     <>
                         <HomeLinkBTN />
-                        <span className="font-black text-headerBackground">
+                        <span className="font-black text-headerBackground/25">
                             /
                         </span>
                     </>
