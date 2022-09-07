@@ -7,7 +7,7 @@ import CustomeImage from "../CustomeImage";
 const CardItem = ({ item }: { item: playItemType | artistItemType }) => {
     return (
         <Link
-            href={`/${item.type === "playlist" ? "playlists" : "artist"}/${
+            href={`/${item.type === "playlist" ? "playlists" : "artists"}/${
                 item.id
             }`}
         >
