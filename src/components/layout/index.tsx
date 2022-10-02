@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React from "react";
 import { useQuery } from "react-query";
+import { useAppContext } from "../../context";
 import getRequests from "../../spotify/getRequest";
 import paths from "../../spotify/requestPaths";
 import Logout from "../Logout";
@@ -12,11 +13,12 @@ interface props {
 }
 
 const Layout = ({ children }: props) => {
-    const {
-        data: profile,
-        isLoading,
-        isError,
-    } = useQuery(["profile"], () => getRequests(paths.profile));
+    const { data, isLoading, isError, ...other } = useQuery(["profile"], () =>
+        getRequests(paths.profile)
+    );
+    const contect = useAppContext();
+
+    const profile = data || contect.profile;
 
     const { pathname } = useRouter();
     const dontShowProfileInPath = ["/", "/playlists/[id]", "/artists/[id]"];

@@ -2,12 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components{
-    body{
-        @apply bg-base
+@keyframes initialLoadingAnimation {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.initialLoading {
+    animation-name: initialLoadingAnimation;
+    animation-duration: 300ms;
+    animation-delay: 3s;
+    animation-fill-mode: forwards;
+}
+
+@layer components {
+    body {
+        @apply bg-base;
     }
 
-    .playlist-description a{
-        @apply text-highlight hover:text-highlight-press transition-colors
+    .playlist-description a {
+        @apply text-highlight transition-colors hover:text-highlight-press;
     }
 }
