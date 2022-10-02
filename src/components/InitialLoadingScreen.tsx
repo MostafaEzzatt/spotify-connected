@@ -1,10 +1,4 @@
-import {
-    DetailedHTMLProps,
-    HTMLAttributes,
-    useEffect,
-    useRef,
-    useState,
-} from "react";
+import { useEffect, useRef, useState } from "react";
 import Loading from "./svgs/Loading";
 
 const InitialLoadingScreen = () => {
