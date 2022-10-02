@@ -5,6 +5,8 @@ const InitialLoadingScreen = () => {
     const [visible, setVisible] = useState(true);
     const loading = useRef<HTMLDivElement | null>(null);
 
+    console.log(visible);
+
     useEffect(() => {
         if (loading.current && typeof loading.current != null) {
             loading.current.addEventListener("animationend", (event) => {
