@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
-import HomeLinkBTN from "../HomeLinkBTN";
-import Home from "../svgs/Home";
+import DashboardLinkBTN from "../DashboardLinkBTN";
 
 type Props = {
     txt: string;
@@ -18,7 +16,7 @@ const SectionHeading = (props: Props) => {
             <h2 className="mb-4 flex items-center gap-2 text-2xl text-white">
                 {!dontShowInPath.includes(pathname) && (
                     <>
-                        <HomeLinkBTN />
+                        <DashboardLinkBTN />
                         <span className="font-black text-headerBackground/25">
                             /
                         </span>

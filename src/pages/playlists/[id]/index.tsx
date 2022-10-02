@@ -38,8 +38,6 @@ const List = ({ id }: { id: string }) => {
         }
     );
 
-    console.log(playlist);
-
     if (isLoading) return <LoadingFullScreen />;
 
     const heading = [
