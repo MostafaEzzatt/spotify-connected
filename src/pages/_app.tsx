@@ -8,6 +8,7 @@ import "../styles/globals.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import InitialLoadingScreen from "../components/InitialLoadingScreen";
 import AppContextProvider from "../context";
 
 const ReactQueryClient = new QueryClient({
@@ -22,6 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     return (
         <AppContextProvider>
             <Layout>
+                <InitialLoadingScreen />
                 <ToastContainer
                     position="top-center"
                     pauseOnFocusLoss={false}
